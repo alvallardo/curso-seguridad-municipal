@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso Interactivo: Manual de Seguridad y Orden Público</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --bg-card-alt: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --accent-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --border-color: #475569;
+      --complement-bg: rgba(245, 158, 11, 0.12);
+      --complement-border: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Barra superior */
+    header {
+      background-color: #0b1120;
+      border-bottom: 2px solid var(--accent-gold);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-blue);
+      border: 2px solid var(--accent-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .brand-title h1 {
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    .brand-title span {
+      font-size: 0.8rem;
+      color: var(--accent-gold);
+      display: block;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: var(--accent-blue);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background-color: #2563eb;
+    }
+
+    .btn:disabled {
+      background-color: #475569;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card-alt);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .btn-gold {
+      background-color: var(--accent-gold);
+      color: #0f172a;
+    }
+
+    .btn-gold:hover {
+      background-color: #d97706;
+    }
+
+    .btn-danger {
+      background-color: var(--accent-red);
+    }
+
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+
+    .btn-success {
+      background-color: var(--accent-green);
+    }
+
+    .btn-success:hover {
+      background-color: #059669;
+    }
+
+    /* Barra de progreso general */
+    .progress-bar-container {
+      background-color: #1e293b;
+      padding: 8px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 12px;
+      background-color: #0f172a;
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 200px;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-stats {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Layout principal */
+    .layout-container {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Menú lateral */
+    aside.sidebar {
+      width: 290px;
+      background-color: #162032;
+      border-right: 1px solid var(--border-color);
+      padding: 16px 12px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-gold);
+      margin-bottom: 10px;
+      padding-left: 8px;
+      font-weight: 700;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 9px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background-color: rgba(59, 130, 246, 0.2);
+      border-color: var(--accent-blue);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #334155;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    .status-dot.done {
+      background-color: var(--accent-green);
+      color: #fff;
+    }
+
+    /* Área de contenido principal */
+    main.content-area {
+      flex: 1;
+      padding: 28px 32px;
+      overflow-y: auto;
+      max-width: 100%;
+    }
+
+    .page-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Estilos de contenido */
+    .module-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+
+    .module-tag {
+      display: inline-block;
+      background-color: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid #3b82f6;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .module-header h2 {
+      font-size: 1.75rem;
+      color: #fff;
+    }
+
+    .original-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .original-badge {
+      display: inline-block;
+      background-color: #1d4ed8;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    .complement-box {
+      background-color: var(--complement-bg);
+      border: 1px solid var(--complement-border);
+      border-left: 5px solid var(--complement-border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+    }
+
+    .complement-badge {
+      display: inline-block;
+      background-color: var(--accent-gold);
+      color: #0f172a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    h3 {
+      color: #93c5fd;
+      margin: 14px 0 8px 0;
+      font-size: 1.22rem;
+    }
+
+    h4 {
+      color: var(--accent-gold);
+      margin: 12px 0 6px 0;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    ul, ol {
+      margin: 8px 0 14px 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    blockquote.legal-quote {
+      background-color: #0f172a;
+      border-left: 4px solid var(--accent-gold);
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-style: italic;
+      border-radius: 0 6px 6px 0;
+      color: #f1f5f9;
+    }
+
+    .alert-important {
+      background-color: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--accent-red);
+      border-left: 5px solid var(--accent-red);
+      padding: 14px 16px;
+      border-radius: 6px;
+      margin: 14px 0;
+    }
+
+    /* Tablas */
+    .table-responsive {
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #0f172a;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #1e3a8a;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background-color: rgba(30, 41, 59, 0.6);
+    }
+
+    /* Tarjetas interactivas (Flashcards / Flip) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin: 14px 0;
+    }
+
+    .flip-card {
+      background-color: #0f172a;
+      border: 1px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .flip-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-gold);
+    }
+
+    .flip-card-title {
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flip-card-body {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    .flip-card.open .flip-card-body {
+      display: block;
+    }
+
+    /* Acordeón desplegable */
+    .accordion-item {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      background-color: #0f172a;
+    }
+
+    .accordion-header {
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      background-color: #1e293b;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .accordion-header:hover {
+      background-color: #334155;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .accordion-item.open .accordion-content {
+      display: block;
+    }
+
+    /* Actividades de comprobación por módulo */
+    .quiz-box {
+      background-color: #162032;
+      border: 2px solid var(--accent-green);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 26px;
+    }
+
+    .quiz-question {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .quiz-question:last-of-type {
+      border-bottom: none;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .quiz-option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      padding: 9px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .quiz-option-label:hover {
+      border-color: var(--accent-blue);
+    }
+
+    .feedback-msg {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .feedback-msg.ok {
+      display: block;
+      background-color: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-green);
+      color: #6ee7b7;
+    }
+
+    .feedback-msg.err {
+      display: block;
+      background-color: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--accent-red);
+      color: #fca5a5;
+    }
+
+    /* Pie de navegación de página */
+    .page-nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Buscador de claves radiales */
+    .search-bar {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--accent-blue);
+      background-color: #0f172a;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 14px;
+    }
+
+    /* Índice de tarjetas */
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .index-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .index-card h4 {
+      margin: 0;
+      color: #fff;
+    }
+
+    /* Resultados de la prueba final */
+    .score-banner {
+      background: linear-gradient(135deg, #1e3a8a, #0f172a);
+      border: 2px solid var(--accent-gold);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .grade-badge {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 8px 0;
+    }
+
+    .grade-pass { color: var(--accent-green); }
+    .grade-fail { color: var(--accent-red); }
+
+    .correction-card {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .correction-card.correct {
+      border-left: 5px solid var(--accent-green);
+    }
+
+    .correction-card.incorrect {
+      border-left: 5px solid var(--accent-red);
+    }
+
+    /* Ilustraciones SVG embebidas */
+    .svg-diagram-container {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 900px) {
+      .layout-container {
+        flex-direction: column;
+      }
+      aside.sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        max-height: 240px;
+      }
+      main.content-area {
+        padding: 18px 16px;
+      }
+    }
+
+    @media print {
+      header, aside.sidebar, .page-nav-footer, .top-actions, .quiz-box button {
+        display: none !important;
+      }
+      .page-section {
+        display: block !important;
+        page-break-after: always;
+      }
+      body {
+        background: #fff;
+        color: #000;
+      }
+      .original-box, .complement-box, table, th, td {
+        border-color: #333 !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">🛡️</div>
+      <div class="brand-title">
+        <h1>MANUAL DE SEGURIDAD Y ORDEN PÚBLICO</h1>
+        <span>Creado por: Marco Alvarado G. ©2026 | Curso Digital Interactivo</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-secondary" onclick="goToPage(0)" title="Ir a la Portada">🏠 Portada</button>
+      <button class="btn btn-secondary" onclick="goToPage(1)" title="Ir al Índice General">📑 Índice</button>
+      <button class="btn btn-secondary" onclick="window.print()" title="Imprimir contenido o resultados">🖨️ Imprimir</button>
+      <button class="btn btn-danger" onclick="resetCourseProgress()" title="Reiniciar progreso guardado">🔄 Reiniciar Progreso</button>
+    </div>
+  </header>
+
+  <!-- BARRA DE PROGRESO -->
+  <div class="progress-bar-container" role="region" aria-label="Progreso del curso">
+    <div class="progress-stats" id="pageIndicatorText">Página 1 de 16</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="globalProgressFill"></div>
+    </div>
+    <div class="progress-stats" id="progressPercentText">0% Completado (0/11 módulos)</div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="layout-container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar" aria-label="Menú de módulos del curso">
+      <div class="sidebar-title">Navegación del Curso</div>
+      <ul class="nav-list" id="sidebarNavList"></ul>
+    </aside>
+
+    <!-- ÁREA DE CONTENIDO -->
+    <main class="content-area" id="mainContent">
+
+      <!-- =========================================================
+           PÁGINA 0: PORTADA
+           ========================================================= -->
+      <section class="page-section active" id="page-0">
+        <div class="original-box" style="text-align: center; padding: 36px 24px;">
+          <span class="original-badge">Contenido Original Íntegro - Portada Oficial</span>
+          <div style="margin: 16px auto; max-width: 120px;">
+            <!-- Representación vectorial de la insignia policial/inspector del documento -->
+            <svg viewBox="0 0 120 120" width="100" height="100" aria-label="Icono de Inspector de Seguridad">
+              <circle cx="60" cy="60" r="56" fill="#1e3a8a" stroke="#f59e0b" stroke-width="4"/>
+              <path d="M35 38 L85 38 L92 25 L60 15 L28 25 Z" fill="#0f172a" stroke="#fff" stroke-width="2"/>
+              <rect x="55" y="20" width="10" height="12" rx="2" fill="#f59e0b"/>
+              <circle cx="60" cy="56" r="16" fill="#f8fafc"/>
+              <path d="M30 102 C30 78 90 78 90 102 Z" fill="#0f172a" stroke="#fff" stroke-width="2"/>
+              <polygon points="55,78 65,78 63,100 57,100" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <h2 style="font-size: 2.2rem; color: #fff; margin-bottom: 8px;">MANUAL DE SEGURIDAD Y ORDEN PÚBLICO</h2>
+          <p style="font-size: 1.1rem; color: var(--accent-gold); font-weight: 700;">Uso interno | Guía Didáctica y Práctica | Material de información</p>
+          <p style="color: var(--text-muted); margin-top: 8px;"><strong>Creado por:</strong> Marco Alvarado G. | <strong>©2026</strong></p>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Temas Cubiertos</span>
+          <h3>TEMAS CUBIERTOS EN EL MANUAL</h3>
+          <ol>
+            <li><strong>1. Seguridad Pública</strong> (Definición y responsabilidades)</li>
+            <li><strong>2. Inspectores Municipales</strong> (Funciones y límites)</li>
+            <li><strong>3. Seguridad Privada</strong> (Marco legal y acreditación OS-10)</li>
+            <li><strong>4. ¿Qué es un Delito?</strong> (Elementos y clasificaciones)</li>
+            <li><strong>5. Robo vs. Hurto</strong> (Diferencias clave y penalidades)</li>
+            <li><strong>6. Conducción y Alcohol en Chile</strong> (Leyes Tolerancia Cero y Emilia)</li>
+            <li><strong>7. Legítima Defensa</strong> (Requisitos legales)</li>
+            <li><strong>8. Violencia Intrafamiliar (VIF)</strong> (Protocolos y protección)</li>
+            <li><strong>9. Flagrancia</strong> (Procedimientos de detención)</li>
+            <li><strong>10. Ley N° 21.802</strong> (Estatuto de Inspectores de Seguridad Municipal)</li>
+            <li><strong>11. Tabla de Claves Radiales</strong> (Codificación oficial)</li>
+            <li><strong>Anexo Integrado: Guía Resumen: Ordenanzas Municipales de Santiago</strong> (Ámbito de aplicación, regulaciones clave y sistema de fiscalización)</li>
+          </ol>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Descripción y Objetivos de Aprendizaje</span>
+          <h3>Bienvenido/a al Curso Digital Interactivo</h3>
+          <p>Este curso transforma el <strong>Manual de Seguridad y Orden Público</strong> y la <strong>Guía Resumen de Ordenanzas Municipales de Santiago</strong> en una experiencia formativa paso a paso, preservando el 100 % del texto, tablas, artículos y codificaciones del documento original.</p>
+          <h4>Objetivos de Aprendizaje:</h4>
+          <ul>
+            <li>Comprender la definición, principios e instituciones responsables de la Seguridad Pública en Chile.</li>
+            <li>Distinguir con precisión las facultades y limitaciones legales de los Inspectores Municipales y los agentes de Seguridad Privada (OS-10).</li>
+            <li>Identificar los elementos constitutivos del delito, su clasificación legal y las diferencias jurídicas y operativas entre Robo y Hurto.</li>
+            <li>Dominar la normativa sobre conducción y alcohol (Ley Tolerancia Cero y Ley Emilia), Legítima Defensa, Violencia Intrafamiliar (Ley N° 20.066) y casos de Flagrancia (Art. 130 CPP).</li>
+            <li>Analizar en detalle todos los párrafos y artículos (Art. 11 al Art. 48) de la <strong>Ley N° 21.802</strong> sobre Inspectores de Seguridad Municipal.</li>
+            <li>Operar la Tabla Oficial de Claves Radiales (Claves 1 a 82) y aplicar las Ordenanzas Municipales de la Ilustre Municipalidad de Santiago.</li>
+          </ul>
+          <p style="margin-top: 12px;"><em>Nota importante: Tu avance y tus respuestas se guardan automáticamente en este navegador. Para que cada módulo se marque como completado (✔), debes realizar su actividad de comprobación al final de la página.</em></p>
+          <div style="margin-top: 20px; text-align: center;">
+            <button class="btn btn-gold" style="font-size: 1.1rem; padding: 12px 28px;" onclick="goToPage(1)">🚀 Comenzar el Curso</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 1: ÍNDICE GENERAL
+           ========================================================= -->
+      <section class="page-section" id="page-1">
+        <div class="module-header">
+          <span class="module-tag">Estructura del Curso</span>
+          <h2>Índice General de Módulos</h2>
+          <p style="color: var(--text-muted);">Accede directamente a cualquier módulo o revisa qué secciones ya has completado.</p>
+        </div>
+
+        <div class="index-grid" id="indexCardsContainer"></div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 2: MÓDULO 1 - SEGURIDAD PÚBLICA E INSPECTORES MUNICIPALES
+           ========================================================= -->
+      <section class="page-section" id="page-2">
+        <div class="module-header">
+          <span class="module-tag">Módulo 1 de 11</span>
+          <h2>1. Seguridad Pública y 2. Inspectores Municipales</h2>
+        </div>
+
+        <!-- 1. SEGURIDAD PÚBLICA -->
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 1</span>
+          <h3>1. SEGURIDAD PÚBLICA</h3>
+          <h4>DEFINICIÓN</h4>
+          <blockquote class="legal-quote">
+            "La Seguridad Pública es la función del Estado orientada a proteger la integridad física y los derechos de las personas, así como el libre ejercicio de las libertades públicas."
+          </blockquote>
+
+          <h4>¿Quiénes son responsables?</h4>
+          <ul>
+            <li><strong>Carabineros de Chile:</strong> Orden y seguridad en el territorio nacional.</li>
+            <li><strong>Policía de Investigaciones (PDI):</strong> Investigación de delitos.</li>
+            <li><strong>Gendarmería de Chile:</strong> Custodia de internos y recintos penitenciarios.</li>
+            <li><strong>Municipalidades:</strong> A través de inspectores y guardias municipales.</li>
+          </ul>
+
+          <h4>Principios Fundamentales</h4>
+          <ul>
+            <li>☑️ Prevención del delito y la violencia.</li>
+            <li>☑️ Protección a víctimas y testigos.</li>
+            <li>☑️ Uso proporcional de la fuerza.</li>
+            <li>☑️ Respeto irrestricto a los Derechos Humanos.</li>
+            <li>☑️ Coordinación interinstitucional.</li>
+          </ul>
+
+          <div class="alert-important">
+            <strong>IMPORTANTE:</strong> La Seguridad Pública NO es exclusividad de las fuerzas policiales. La comunidad, las empresas de seguridad privada y los municipios son actores complementarios esenciales.
+          </div>
+        </div>
+
+        <!-- 2. INSPECTORES MUNICIPALES -->
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 2</span>
+          <h3>2. INSPECTORES MUNICIPALES</h3>
+          <p>Los inspectores municipales son funcionarios de la municipalidad que fiscalizan el cumplimiento de ordenanzas locales, normas de tránsito, comercio y medio ambiente dentro de la comuna.</p>
+
+          <h4>Funciones Principales</h4>
+          <ul>
+            <li>☑️ Fiscalizar el comercio ambulante y establecidos sin permiso.</li>
+            <li>☑️ Control de tránsito y estacionamientos indebidos.</li>
+            <li>☑️ Verificar el cumplimiento de normas de ruido y medio ambiente.</li>
+            <li>☑️ Denunciar infracciones a ordenanzas municipales.</li>
+            <li>☑️ Apoyar en operativos de seguridad junto a Carabineros.</li>
+            <li>☑️ Fiscalizar ferias libres y mercados.</li>
+          </ul>
+
+          <h4>Facultades y Limitaciones</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>PUEDEN HACER</th>
+                  <th>NO PUEDEN HACER</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cursar infracciones y multas administrativas.</td>
+                  <td>Detener a personas (salvo flagrancia con policía).</td>
+                </tr>
+                <tr>
+                  <td>Fiscalizar locales comerciales con permiso municipal.</td>
+                  <td>Ingresar a domicilios sin autorización judicial.</td>
+                </tr>
+                <tr>
+                  <td>Solicitar documentos de identidad.</td>
+                  <td>Actuar fuera de los límites comunales.</td>
+                </tr>
+                <tr>
+                  <td>Apoyar desalojos con orden judicial.</td>
+                  <td>Usar fuerza física sin respaldo policial.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>BASE LEGAL:</strong> Ley Orgánica Constitucional de Municipalidades N° 18.695 y la Ordenanza General de Urbanismo y Construcciones.</p>
+        </div>
+
+        <!-- MATERIAL COMPLEMENTARIO INTERACTIVO -->
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Tarjetas Interactivas</span>
+          <h4>Explora las instituciones responsables (Haz clic en cada tarjeta para descubrir su rol):</h4>
+          <div class="cards-grid">
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>🚓 Carabineros de Chile</span> <span>▼</span></div>
+              <div class="flip-card-body">Encargados del orden y seguridad en todo el territorio nacional.</div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>🔍 Policía de Investigaciones (PDI)</span> <span>▼</span></div>
+              <div class="flip-card-body">Responsables de la investigación especializada de los delitos.</div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>🏛️ Gendarmería de Chile</span> <span>▼</span></div>
+              <div class="flip-card-body">Custodia de internos y administración de recintos penitenciarios.</div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>🦺 Municipalidades</span> <span>▼</span></div>
+              <div class="flip-card-body">Actúan en prevención y fiscalización comunal mediante inspectores y guardias municipales.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPASO DEL MÓDULO 1 -->
+        <div class="quiz-box" id="mod-quiz-1">
+          <h3>📝 Repaso y Comprobación del Módulo 1</h3>
+          <p>Responde correctamente las siguientes preguntas para marcar el Módulo 1 como completado:</p>
+
+          <div class="quiz-question">
+            <p><strong>1. Según el manual, ¿la Seguridad Pública es responsabilidad exclusiva de las fuerzas policiales?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m1q1" value="a"> Sí, únicamente Carabineros y PDI intervienen en ella.</label>
+              <label class="quiz-option-label"><input type="radio" name="m1q1" value="b"> No, la comunidad, las empresas de seguridad privada y los municipios son actores complementarios esenciales.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. ¿Cuál de las siguientes acciones SÍ PUEDE hacer un Inspector Municipal según la tabla de facultades y limitaciones?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m1q2" value="a"> Ingresar a domicilios sin autorización judicial.</label>
+              <label class="quiz-option-label"><input type="radio" name="m1q2" value="b"> Cursar infracciones y multas administrativas y solicitar documentos de identidad.</label>
+              <label class="quiz-option-label"><input type="radio" name="m1q2" value="c"> Usar fuerza física sin respaldo policial fuera de la comuna.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(1, {m1q1:'b', m1q2:'b'})">✔ Comprobar respuestas del Módulo 1</button>
+          <div class="feedback-msg" id="feedback-m1"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 3: MÓDULO 2 - SEGURIDAD PRIVADA
+           ========================================================= -->
+      <section class="page-section" id="page-3">
+        <div class="module-header">
+          <span class="module-tag">Módulo 2 de 11</span>
+          <h2>3. Seguridad Privada (Marco legal y acreditación OS-10)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 3</span>
+          <h3>3. SEGURIDAD PRIVADA</h3>
+          <p>La Seguridad Privada está conformada por empresas y personas naturales autorizadas para brindar servicios de vigilancia, protección de bienes y personas, con carácter complementario -nunca sustitutivo- a la seguridad pública.</p>
+
+          <h4>Marco Legal en Chile</h4>
+          <ul>
+            <li>☑️ <strong>Decreto Ley N° 3.607:</strong> regula el uso de sistemas de alarma y guardias de seguridad.</li>
+            <li>☑️ <strong>Decreto Supremo N° 93/1985:</strong> reglamento sobre vigilantes privados.</li>
+            <li>🔍 <strong>Fiscalización a cargo de Carabineros de Chile (OS-10).</strong></li>
+          </ul>
+
+          <h4>Tipos de Seguridad Privada</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>TIPO</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Vigilante Privado</strong></td>
+                  <td>Con OS10 -vigente, armado, contratado por empresa autorizada.</td>
+                </tr>
+                <tr>
+                  <td><strong>Guardia de Seguridad</strong></td>
+                  <td>Sin arma de fuego, protección de recintos y personas.</td>
+                </tr>
+                <tr>
+                  <td><strong>Seguridad Electrónica</strong></td>
+                  <td>Cámaras, alarmas, control de acceso, CCTV.</td>
+                </tr>
+                <tr>
+                  <td><strong>Seguridad Informática</strong></td>
+                  <td>Protección de datos, ciberseguridad, redes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert-important">
+            <strong>DIFERENCIA CLAVE:</strong> El vigilante privado tiene autorización para portar armas. El guardia de seguridad NO. Ambos deben estar registrados en Carabineros (OS-10).
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Caso Práctico de Identificación</span>
+          <h4>Situación Práctica en Terreno:</h4>
+          <p>Durante una ronda municipal frente a una sucursal bancaria y una tienda comercial, observas a dos agentes de seguridad privada. Uno porta arma de fuego reglamentaria dentro del banco y el otro resguarda el acceso del supermercado sin armamento letal.</p>
+          <button class="btn btn-secondary" onclick="document.getElementById('exp-mod2').style.display = document.getElementById('exp-mod2').style.display === 'none' ? 'block' : 'none'">👁️ Mostrar / Ocultar Análisis Legal</button>
+          <div id="exp-mod2" style="display:none; margin-top:12px; padding:12px; background:#0f172a; border-radius:6px;">
+            <p><strong>Análisis:</strong> Quien porta arma de fuego en la entidad autorizada corresponde a un <strong>Vigilante Privado</strong> (regulado bajo el DS N° 93/1985 y DL N° 3.607), mientras que quien protege el recinto comercial sin arma de fuego es un <strong>Guardia de Seguridad</strong>. Ambos requieren acreditación OS-10 vigente fiscalizada por Carabineros de Chile.</p>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-2">
+          <h3>📝 Repaso y Comprobación del Módulo 2</h3>
+          <div class="quiz-question">
+            <p><strong>1. ¿Cuál es la diferencia clave establecida en el manual entre un Vigilante Privado y un Guardia de Seguridad?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m2q1" value="a"> Solo el guardia de seguridad debe registrarse en OS-10.</label>
+              <label class="quiz-option-label"><input type="radio" name="m2q1" value="b"> El vigilante privado tiene autorización para portar armas y el guardia de seguridad NO (ambos registrados en OS-10).</label>
+              <label class="quiz-option-label"><input type="radio" name="m2q1" value="c"> La seguridad privada sustituye a la seguridad pública en recintos privados.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. ¿Qué organismo está a cargo de la fiscalización de la Seguridad Privada en Chile?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m2q2" value="a"> Carabineros de Chile (OS-10).</label>
+              <label class="quiz-option-label"><input type="radio" name="m2q2" value="b"> Gendarmería de Chile.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(2, {m2q1:'b', m2q2:'a'})">✔ Comprobar respuestas del Módulo 2</button>
+          <div class="feedback-msg" id="feedback-m2"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 4: MÓDULO 3 - ¿QUÉ ES UN DELITO?
+           ========================================================= -->
+      <section class="page-section" id="page-4">
+        <div class="module-header">
+          <span class="module-tag">Módulo 3 de 11</span>
+          <h2>4. ¿Qué es un Delito? (Elementos y clasificaciones)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 4</span>
+          <h3>4. ¿QUÉ ES UN DELITO?</h3>
+          <h4>DEFINICIÓN LEGAL</h4>
+          <blockquote class="legal-quote">
+            El delito es toda acción u omisión voluntaria penada por la ley. (Art. 1° Código Penal de Chile)
+          </blockquote>
+
+          <h4>Elementos del Delito</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ELEMENTO</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>EJEMPLO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Acción / Omisión</strong></td>
+                  <td>Conducta activa o inactiva.</td>
+                  <td>Golpear / No auxiliar a un herido.</td>
+                </tr>
+                <tr>
+                  <td><strong>Típica</strong></td>
+                  <td>Descrita expresamente en la ley.</td>
+                  <td>El Código Penal define el robo.</td>
+                </tr>
+                <tr>
+                  <td><strong>Antijurídica</strong></td>
+                  <td>Contraria al ordenamiento legal.</td>
+                  <td>Sin justificación (ej. legítima defensa).</td>
+                </tr>
+                <tr>
+                  <td><strong>Culpable</strong></td>
+                  <td>El autor debe ser imputable.</td>
+                  <td>Mayor de 14 años con discernimiento.</td>
+                </tr>
+                <tr>
+                  <td><strong>Penada</strong></td>
+                  <td>Tiene una sanción establecida.</td>
+                  <td>Presidio, multa, etc.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Clasificación de los Delitos</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>CATEGORÍA</th>
+                  <th>PENA</th>
+                  <th>EJEMPLOS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Crimen</strong></td>
+                  <td>Más de 5 años y 1 día.</td>
+                  <td>Homicidio, violación, secuestro.</td>
+                </tr>
+                <tr>
+                  <td><strong>Simple Delito</strong></td>
+                  <td>61 días a 5 años.</td>
+                  <td>Hurto simple, lesiones leves.</td>
+                </tr>
+                <tr>
+                  <td><strong>Falta</strong></td>
+                  <td>Hasta 60 días.</td>
+                  <td>Ebriedad en vía pública, ruidos molestos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Acordeón Mnemotécnico</span>
+          <h4>Guía Rápida para recordar los 5 elementos del delito:</h4>
+          <p>Haz clic en cada elemento para repasar cómo verificarlo en un procedimiento:</p>
+          <div class="accordion-item" onclick="this.classList.toggle('open')">
+            <button class="accordion-header">1. Acción u Omisión vs. 2. Tipicidad <span>➕</span></button>
+            <div class="accordion-content">Primero debe existir una conducta humana voluntaria (hacer algo como golpear, o dejar de hacer algo obligatorio como no auxiliar a un herido) y esa conducta debe estar expresamente escrita en la ley penal (Típica).</div>
+          </div>
+          <div class="accordion-item" onclick="this.classList.toggle('open')">
+            <button class="accordion-header">3. Antijurídica, 4. Culpable y 5. Penada <span>➕</span></button>
+            <div class="accordion-content">La conducta no debe estar amparada por una causal de justificación como la legítima defensa (Antijurídica), quien la realiza debe ser imputable, es decir, mayor de 14 años con discernimiento (Culpable), y la ley debe asignarle una sanción como presidio o multa (Penada).</div>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-3">
+          <h3>📝 Repaso y Comprobación del Módulo 3</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según el Art. 1° del Código Penal de Chile citado en el manual, ¿qué es el delito?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m3q1" value="a"> Toda infracción administrativa municipal sancionada con multa en UTM.</label>
+              <label class="quiz-option-label"><input type="radio" name="m3q1" value="b"> Toda acción u omisión voluntaria penada por la ley.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. De acuerdo con la tabla de Clasificación de los Delitos, ¿qué categoría recibe una pena de 61 días a 5 años (ej. hurto simple, lesiones leves)?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m3q2" value="a"> Crimen</label>
+              <label class="quiz-option-label"><input type="radio" name="m3q2" value="b"> Simple Delito</label>
+              <label class="quiz-option-label"><input type="radio" name="m3q2" value="c"> Falta</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(3, {m3q1:'b', m3q2:'b'})">✔ Comprobar respuestas del Módulo 3</button>
+          <div class="feedback-msg" id="feedback-m3"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 5: MÓDULO 4 - ROBO Y HURTO
+           ========================================================= -->
+      <section class="page-section" id="page-5">
+        <div class="module-header">
+          <span class="module-tag">Módulo 4 de 11</span>
+          <h2>5. Robo vs. Hurto (Diferencias clave y penalidades)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 5</span>
+          <h3>5. ROBO Y HURTO</h3>
+          <h4>DIFERENCIAS CLAVE</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ASPECTO</th>
+                  <th>HURTO</th>
+                  <th>ROBO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Definición</strong></td>
+                  <td>Apropiación de cosa ajena sin violencia ni intimidación.</td>
+                  <td>Apropiación usando violencia, intimidación o fuerza en las cosas.</td>
+                </tr>
+                <tr>
+                  <td><strong>Violencia o intimidación</strong></td>
+                  <td>NO.</td>
+                  <td>Sí (en el robo con violencia/intimidación).</td>
+                </tr>
+                <tr>
+                  <td><strong>Fuerza en las cosas</strong></td>
+                  <td>NO.</td>
+                  <td>Sí (en el robo con fuerza: fractura, llave falsa, etc.).</td>
+                </tr>
+                <tr>
+                  <td><strong>Artículo Código Penal</strong></td>
+                  <td>Art. 446 al 456 bis.</td>
+                  <td>Art. 432, 433, 436, 440 al 445.</td>
+                </tr>
+                <tr>
+                  <td><strong>Pena mínima (referencial)</strong></td>
+                  <td>61 días a 5 años según monto.</td>
+                  <td>5 años y 1 día (robo con violencia).</td>
+                </tr>
+                <tr>
+                  <td><strong>Claves radiales</strong></td>
+                  <td><strong>CLAVE 39.</strong></td>
+                  <td><strong>CLAVE 67.</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Hurto: Tramos de Pena según Valor</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>VALOR SUSTRAÍDO (UTM)</th>
+                  <th>PENA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Menos de 1/2 UTM</strong></td>
+                  <td>Prisión en grado mínimo a medio (1 a 60 días).</td>
+                </tr>
+                <tr>
+                  <td><strong>1/2 UTM a 4 UTM</strong></td>
+                  <td>Presidio menor en grado mínimo (61 días a 1 año).</td>
+                </tr>
+                <tr>
+                  <td><strong>4 UTM a 40 UTM</strong></td>
+                  <td>Presidio menor en grado medio (541 días a 3 años).</td>
+                </tr>
+                <tr>
+                  <td><strong>Más de 40 UTM</strong></td>
+                  <td>Presidio menor en grado máximo (3 años 1 día a 5 años).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert-important">
+            <strong>REGLA PRÁCTICA:</strong> La diferencia clave es el MEDIO usado: si hay violencia, intimidación o fuerza en las cosas → <strong>ROBO</strong>. Si solo es apropiación sigilosa → <strong>HURTO</strong>.
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Simulador de Clasificación Operativa</span>
+          <h4>Ejercicio de Toma de Decisiones: ¿Clave 39 (Hurto) o Clave 67 (Robo)?</h4>
+          <p>Lee el caso: <em>"Un sujeto aprovecha el descuido de un transeúnte en un café del centro y toma su mochila desde la silla contigua de forma sigilosa, sin amenazar a nadie ni romper ningún candado."</em></p>
+          <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+            <button class="btn btn-secondary" onclick="alert('Correcto: Es HURTO (Clave 39), ya que hubo apropiación sigilosa sin violencia, intimidación ni fuerza en las cosas.')">Reportar CLAVE 39 (Hurto)</button>
+            <button class="btn btn-secondary" onclick="alert('Incorrecto: La Clave 67 corresponde a Robo. Como aquí no hubo violencia ni fuerza en las cosas, corresponde a Hurto (Clave 39).')">Reportar CLAVE 67 (Robo)</button>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-4">
+          <h3>📝 Repaso y Comprobación del Módulo 4</h3>
+          <div class="quiz-question">
+            <p><strong>1. ¿Cuáles son las claves radiales respectivas para Hurto y para Robo según el cuadro comparativo?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m4q1" value="a"> Hurto: CLAVE 39 | Robo: CLAVE 67.</label>
+              <label class="quiz-option-label"><input type="radio" name="m4q1" value="b"> Hurto: CLAVE 15 | Robo: CLAVE 22.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. Si el valor sustraído en un hurto es de menos de 1/2 UTM, ¿cuál es la pena establecida en la tabla?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m4q2" value="a"> Presidio menor en grado máximo (3 años 1 día a 5 años).</label>
+              <label class="quiz-option-label"><input type="radio" name="m4q2" value="b"> Prisión en grado mínimo a medio (1 a 60 días).</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(4, {m4q1:'a', m4q2:'b'})">✔ Comprobar respuestas del Módulo 4</button>
+          <div class="feedback-msg" id="feedback-m4"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 6: MÓDULO 5 - CONDUCCIÓN Y ALCOHOL / LEGÍTIMA DEFENSA
+           ========================================================= -->
+      <section class="page-section" id="page-6">
+        <div class="module-header">
+          <span class="module-tag">Módulo 5 de 11</span>
+          <h2>6. Conducción y Alcohol en Chile y 7. Legítima Defensa</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 6</span>
+          <h3>6. CONDUCCIÓN Y ALCOHOL EN CHILE</h3>
+          <p>En Chile, el estado de ebriedad al conducir se define al registrar <strong>0,8 o más gramos de alcohol por litro de sangre</strong>. Las normativas de la Ley Tolerancia Cero y la Ley Emilia castigan con severidad estas conductas.</p>
+
+          <h4>1. Grados de alcohol para conductores</h4>
+          <ul>
+            <li><strong>Bajo la influencia del alcohol:</strong> Entre 0,3 y 0,79 g/l de sangre.</li>
+            <li><strong>Estado de ebriedad:</strong> Desde 0,8 g/l de sangre en adelante.</li>
+          </ul>
+
+          <h4>2. Sanciones por Primera Vez (Sin daños ni lesiones)</h4>
+          <ul>
+            <li>☑️ <strong>Suspensión de licencia:</strong> 2 años.</li>
+            <li>☑️ <strong>Multa:</strong> Entre 2 y 10 UTM.</li>
+            <li>☑️ <strong>Cursos de concientización:</strong> Obligatorios.</li>
+          </ul>
+
+          <h4>3. Consecuencias Graves (Ley Emilia)</h4>
+          <p>Aplica al provocar accidentes con resultado de lesiones graves, gravísimas o la muerte en estado de ebriedad:</p>
+          <ul>
+            <li>☑️ <strong>Cárcel Efectiva:</strong> Mínimo un año de presidio efectivo (sin beneficios).</li>
+            <li>☑️ <strong>Penas asociadas:</strong> Varían entre 3 años y 1 día a 10 años.</li>
+            <li>❌ <strong>Inhabilidad:</strong> Inhabilidad perpetua para conducir vehículos motorizados.</li>
+            <li>☑️ <strong>Comiso:</strong> Incautación legal del vehículo utilizado.</li>
+          </ul>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 7</span>
+          <h3>7. LEGÍTIMA DEFENSA</h3>
+          <p>Es una causal de justificación que exime de responsabilidad penal a quien actúa para protegerse a sí mismo o a terceros frente a una agresión ilegítima (Art. 10 N° 4, 5 y 6 del Código Penal).</p>
+
+          <h4>Requisitos (deben cumplirse TODOS)</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>REQUISITO</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>Agresión ilegítima</strong></td>
+                  <td>Debe existir un ataque real, actual o inminente, sin derecho del agresor.</td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td><strong>Necesidad racional del medio</strong></td>
+                  <td>La defensa debe ser proporcional a la amenaza sufrida.</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td><strong>Falta de provocación suficiente</strong></td>
+                  <td>Quien se defiende no debe haber provocado la agresión.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Verificador de Requisitos</span>
+          <h4>Importante sobre la Legítima Defensa:</h4>
+          <p>Observa que el manual destaca que <strong>deben cumplirse TODOS los 3 requisitos copulativos</strong>. Si falta uno solo (por ejemplo, si quien se defiende provocó suficientemente la pelea o utilizó un medio totalmente desproporcionado), deja de configurarse la legítima defensa completa del Art. 10 N° 4, 5 y 6 del Código Penal.</p>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-5">
+          <h3>📝 Repaso y Comprobación del Módulo 5</h3>
+          <div class="quiz-question">
+            <p><strong>1. ¿A partir de qué concentración se define el "Estado de ebriedad" en Chile según el manual?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m5q1" value="a"> Entre 0,3 y 0,79 g/l de sangre.</label>
+              <label class="quiz-option-label"><input type="radio" name="m5q1" value="b"> Desde 0,8 g/l de sangre en adelante.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. ¿Cuáles son los tres requisitos que deben cumplirse TODOS para configurar la Legítima Defensa (Art. 10 N° 4, 5 y 6 CP)?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m5q2" value="a"> 1. Agresión ilegítima, 2. Necesidad racional del medio y 3. Falta de provocación suficiente.</label>
+              <label class="quiz-option-label"><input type="radio" name="m5q2" value="b"> 1. Orden judicial previa, 2. Presencia policial y 3. Denuncia dentro de 24 horas.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(5, {m5q1:'b', m5q2:'a'})">✔ Comprobar respuestas del Módulo 5</button>
+          <div class="feedback-msg" id="feedback-m5"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 7: MÓDULO 6 - VIOLENCIA INTRAFAMILIAR (VIF) Y FLAGRANCIA
+           ========================================================= -->
+      <section class="page-section" id="page-7">
+        <div class="module-header">
+          <span class="module-tag">Módulo 6 de 11</span>
+          <h2>8. Violencia Intrafamiliar (VIF) y 9. Flagrancia</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 8</span>
+          <h3>8. VIOLENCIA INTRAFAMILIAR (VIF)</h3>
+          <p>Todo maltrato que afecte la vida, integridad física o psíquica de un familiar o conviviente. (Ley N° 20.066).</p>
+
+          <h4>☑️ Tipos de Violencia</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>TIPO</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>EJEMPLOS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Física</strong></td>
+                  <td>Golpes, lesiones corporales.</td>
+                  <td>Puñetazos, empujones, quemaduras.</td>
+                </tr>
+                <tr>
+                  <td><strong>Psicológica</strong></td>
+                  <td>Daño emocional, humillaciones.</td>
+                  <td>Insultos, amenazas, control obsesivo.</td>
+                </tr>
+                <tr>
+                  <td><strong>Sexual</strong></td>
+                  <td>Actos sexuales sin consentimiento.</td>
+                  <td>Violación conyugal, abuso sexual.</td>
+                </tr>
+                <tr>
+                  <td><strong>Económica</strong></td>
+                  <td>Control de recursos financieros.</td>
+                  <td>Privar de dinero, impedir trabajo.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert-important">
+            <strong>📞 FONO FAMILIA 149:</strong> Línea gratuita y confidencial de Carabineros disponible las 24 horas.
+          </div>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 9</span>
+          <h3>9. FLAGRANCIA</h3>
+          <h4>DEFINICIÓN</h4>
+          <blockquote class="legal-quote">
+            Situación en que una persona es sorprendida en el momento de cometer el delito, o inmediatamente después. Art. 130 del Código Procesal Penal.
+          </blockquote>
+
+          <h4>Casos de Flagrancia (Art. 130 CPP)</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>SITUACIÓN</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Flagrancia actual</strong></td>
+                  <td>El imputado es sorprendido cometiendo el delito.</td>
+                </tr>
+                <tr>
+                  <td><strong>Flagrancia por persecución</strong></td>
+                  <td>Huye del lugar y es perseguido inmediatamente.</td>
+                </tr>
+                <tr>
+                  <td><strong>Flagrancia por encontrar</strong></td>
+                  <td>Es encontrado poco después con objetos o huellas del delito.</td>
+                </tr>
+                <tr>
+                  <td><strong>Flagrancia extendida</strong></td>
+                  <td>Identificado por víctimas o testigos dentro de las 12 horas siguientes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Tarjetas de Asociación de Flagrancia</span>
+          <h4>Haz clic en cada situación para comprobar qué tipo de flagrancia del Art. 130 CPP se aplica:</h4>
+          <div class="cards-grid">
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>Caso 1: En el acto mismo</span> <span>▼</span></div>
+              <div class="flip-card-body"><strong>Flagrancia actual:</strong> El sujeto es sorprendido en el preciso instante en que está cometiendo el ilícito.</div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('open')">
+              <div class="flip-card-title"><span>Caso 2: Reconocido 6 horas después</span> <span>▼</span></div>
+              <div class="flip-card-body"><strong>Flagrancia extendida:</strong> Es identificado por víctimas o testigos dentro del plazo de las 12 horas siguientes al hecho.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-6">
+          <h3>📝 Repaso y Comprobación del Módulo 6</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según la Ley N° 20.066 sobre Violencia Intrafamiliar (VIF), ¿a qué tipo de violencia corresponde "Privar de dinero, impedir trabajo"?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m6q1" value="a"> Económica</label>
+              <label class="quiz-option-label"><input type="radio" name="m6q1" value="b"> Física</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. En el Art. 130 del Código Procesal Penal, ¿cuál es el plazo de la "Flagrancia extendida" cuando el imputado es identificado por víctimas o testigos?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m6q2" value="a"> Dentro de las 12 horas siguientes.</label>
+              <label class="quiz-option-label"><input type="radio" name="m6q2" value="b"> Dentro de los 5 días hábiles siguientes.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(6, {m6q1:'a', m6q2:'a'})">✔ Comprobar respuestas del Módulo 6</button>
+          <div class="feedback-msg" id="feedback-m6"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 8: MÓDULO 7 - LEY N° 21.802 (PÁRRAFO 1°: ART. 11 AL 16)
+           ========================================================= -->
+      <section class="page-section" id="page-8">
+        <div class="module-header">
+          <span class="module-tag">Módulo 7 de 11</span>
+          <h2>10. Ley N° 21.802 - Inspectores de Seguridad Municipal (Párrafo 1°)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Apartado 10 (Alcance y Párrafo 1°)</span>
+          <h3>10. LEY N° 21.802 - INSPECTORES DE SEGURIDAD MUNICIPAL</h3>
+          <h4>ALCANCE DE LA LEY</h4>
+          <p>Esta ley regula el nombramiento, funciones, atribuciones, deberes, incompatibilidades y derechos de las Inspectoras e Inspectores de Seguridad Municipal en Chile, estableciendo el marco legal para su actuación como agentes de prevención del delito y resguardo de la convivencia vecinal.</p>
+
+          <h3>Párrafo 1° - Nombramiento</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>CONTENIDO OFICIAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 11 - Nombramiento y dependencia</strong></td>
+                  <td>El alcalde puede nombrar inspectores de seguridad municipal. Dependen del Director de Seguridad Pública comunal o del jefe de unidad que designe el alcalde. Se rigen por el Estatuto Administrativo Municipal (Ley N° 18.883) o el Código del Trabajo según corresponda.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 12 - Requisitos para el nombramiento</strong></td>
+                  <td>
+                    Además de los requisitos de la Ley N° 18.883, deben cumplir:
+                    <table style="margin-top:8px;">
+                      <thead>
+                        <tr>
+                          <th>LETRA</th>
+                          <th>REQUISITO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td><strong>a)</strong></td><td>Haber cursado enseñanza media completa (acreditada por certificado del Mineduc u otro documento oficial)</td></tr>
+                        <tr><td><strong>b)</strong></td><td>Idoneidad física y psicológica acreditada por informe del Servicio de Salud (evaluación anual)</td></tr>
+                        <tr><td><strong>c)</strong></td><td>No haber sido condenado por crimen o simple delito (certificado de antecedentes)</td></tr>
+                        <tr><td><strong>d)</strong></td><td>No haber sido condenado por violencia intrafamiliar (Ley N° 20.066)</td></tr>
+                        <tr><td><strong>e)</strong></td><td>No haber sido condenado a inhabilitación para cargos vinculados a menores, adultos mayores o personas en situación de discapacidad</td></tr>
+                        <tr><td><strong>f)</strong></td><td>No haber cesado en FF.AA., Orden y Seguridad o Gendarmería por sanciones disciplinarias en los últimos 10 años</td></tr>
+                        <tr><td><strong>g)</strong></td><td>No estar cumpliendo sanción por Ley N° 19.327 (espectáculos de fútbol) ni haber cumplido sanción hace menos de 3 años</td></tr>
+                        <tr><td><strong>h)</strong></td><td>No figurar en los registros de los artículos 24 inc. 2° y 60 inc. 2°</td></tr>
+                        <tr><td><strong>i)</strong></td><td>Contar con licencia de conducir si el cargo lo requiere</td></tr>
+                        <tr><td><strong>j)</strong></td><td>Efectuar declaración de intereses y patrimonio (Ley N° 20.880)</td></tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 13 - Requisitos para el ejercicio de funciones</strong></td>
+                  <td>El inspector debe aprobar las capacitaciones reglamentarias dentro del primer año de nombramiento. Si no las aprueba en 1 año, el alcalde puede mantenerlo o removerlo. Si no las aprueba en 2 años, cesa en el cargo. Mientras no apruebe las capacitaciones, solo puede ejercer funciones básicas (Art. 20 y Párrafo 4°).</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 14 - Incompatibilidades</strong></td>
+                  <td>Es incompatible ser inspector de seguridad municipal con: ser dueño o participar en negocios o actividades incompatibles con la fiscalización comunal; ejercer labores reguladas en la Ley N° 21.659 (Seguridad Privada); tener vínculos familiares (hasta 2° grado de consanguinidad, matrimonio o unión civil) con personas que posean ese tipo de negocios. Esta incompatibilidad también alcanza a funcionarios de confianza del alcalde, directivos municipales y sus familiares cercanos.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 15 - Pérdida sobreviniente de requisitos</strong></td>
+                  <td>La municipalidad debe verificar anualmente los requisitos. Si se pierde alguno, el inspector cesa. Para la licencia de conducir: cancelación = posible reubicación o vacancia; suspensión = reubicación o suspensión de funciones; no renovación = reubicación. Las causales subsanables permiten hasta 6 meses para regularizar.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 16 - Exámenes de drogas</strong></td>
+                  <td>Directores e inspectores deben declarar juramento de no consumir drogas ilegales antes de asumir. Existe control periódico, universal o aleatorio, reservado y respetuoso de la dignidad. Resultado positivo sin justificación médica = cese de funciones. El alcalde también debe someterse a este examen al menos una vez al año.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Puntos Clave de Plazos del Párrafo 1°</span>
+          <ul>
+            <li><strong>Evaluación de idoneidad física y psicológica (Art. 12 letra b):</strong> Evaluación anual por informe del Servicio de Salud.</li>
+            <li><strong>Plazo de capacitaciones (Art. 13):</strong> 1 año para aprobarlas (si no aprueba en 2 años, cesa en el cargo).</li>
+            <li><strong>Regularización de causales subsanables (Art. 15):</strong> Hasta 6 meses para regularizar.</li>
+            <li><strong>Examen de drogas del Alcalde (Art. 16):</strong> Al menos una vez al año.</li>
+          </ul>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-7">
+          <h3>📝 Repaso y Comprobación del Módulo 7</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según el Art. 13 de la Ley N° 21.802, ¿qué ocurre si un inspector no aprueba las capacitaciones reglamentarias en un plazo de 2 años?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m7q1" value="a"> Cesa en el cargo.</label>
+              <label class="quiz-option-label"><input type="radio" name="m7q1" value="b"> Recibe una amonestación verbal sin efectos laborales.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. De acuerdo con el Art. 14, ¿es compatible ser inspector de seguridad municipal y ejercer simultáneamente labores reguladas en la Ley N° 21.659 (Seguridad Privada)?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m7q2" value="a"> Sí, siempre que sea fuera del horario municipal.</label>
+              <label class="quiz-option-label"><input type="radio" name="m7q2" value="b"> No, es expresamente incompatible según el Art. 14.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(7, {m7q1:'a', m7q2:'b'})">✔ Comprobar respuestas del Módulo 7</button>
+          <div class="feedback-msg" id="feedback-m7"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 9: MÓDULO 8 - LEY N° 21.802 (PÁRRAFOS 2° Y 3°: ART. 17 AL 26)
+           ========================================================= -->
+      <section class="page-section" id="page-9">
+        <div class="module-header">
+          <span class="module-tag">Módulo 8 de 11</span>
+          <h2>10. Ley N° 21.802 - Párrafos 2° y 3° (Art. 17 al Art. 26)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Párrafo 2° y Párrafo 3°</span>
+          <h3>Párrafo 2° - Funciones, atribuciones y deberes generales</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>CONTENIDO OFICIAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 17 - Funciones principales</strong></td>
+                  <td>Función principal: prevención del delito, protección de personas y promoción de la convivencia vecinal. Pueden colaborar en emergencias y actuar como coadyuvantes de las Fuerzas de Orden y Seguridad. Su actuación se rige por reglamento municipal elaborado en base a orientaciones técnicas de la Subsecretaría de Prevención del Delito.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 18 - Prohibición de actos policiales</strong></td>
+                  <td>Está ESTRICTAMENTE PROHIBIDO a los inspectores ejercer cualquier atribución propia de las Fuerzas de Orden y Seguridad Pública. El incumplimiento acarrea responsabilidad administrativa y penal.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 19 - Deber de coordinación</strong></td>
+                  <td>Deben trabajar coordinadamente con Carabineros, PDI, Sistema Nacional de Protección Ciudadana y organismos de emergencia. La coordinación para funciones coadyuvantes se rige por reglamento del Ministerio de Seguridad Pública, previo informe de Carabineros, y puede formalizarse mediante convenios.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 20 - Detención en flagrancia</strong></td>
+                  <td>Pueden detener a quien sorprendan en delito flagrante conforme al Art. 129 CPP. En persecución de flagrancia (Art. 130 CPP), deben comunicar de inmediato a las Fuerzas de Orden para que asuman los procedimientos. El plazo de 'tiempo inmediato' para inspectores municipales es de hasta 12 horas desde la comisión del hecho. Pueden traspasar límites comunales solo para practicar la detención.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 21 - Coordinación intercomunal en eventos masivos</strong></td>
+                  <td>Dos o más municipalidades colindantes pueden coordinarse cuando un evento masivo afecte más de una comuna. La coordinación debe regularse mediante convenio entre municipalidades e informarse a la Delegación Presidencial Regional.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 22 - Deber de reserva</strong></td>
+                  <td>Todo el personal municipal vinculado a seguridad pública debe mantener reserva o secreto de la información obtenida en sus funciones, incluso después de cesar en el cargo. La infracción se sanciona conforme al Art. 246 del Código Penal. Se exceptúan los requerimientos de tribunales o el Ministerio Público con orden judicial.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 23 - Deber de denuncia</strong></td>
+                  <td>Los inspectores deben denunciar todo delito del que tomen conocimiento en el ejercicio de sus funciones, dentro del plazo del Art. 176 CPP. El incumplimiento se sanciona según el Art. 177 CPP.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 24 - Nómina de inspectores</strong></td>
+                  <td>Las municipalidades deben enviar trimestralmente a Carabineros y a la Subsecretaría de Prevención del Delito la nómina actualizada de inspectores. En caso de desvinculación por falta a la probidad, deben informarlo en un máximo de 5 días. La Subsecretaría lleva un registro de desvinculados por estas causas, cuyos datos se eliminan a los 5 años.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 25 - Sistemas de televigilancia</strong></td>
+                  <td>Las municipalidades pueden instalar cámaras, drones, semáforos, luminarias y otros dispositivos tecnológicos para prevención del delito. Solo se pueden grabar imágenes, NO sonidos. Deben informar al Ministerio Público y a las Fuerzas de Orden sobre la ubicación de los dispositivos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top:20px;">Párrafo 3° - Recursos tecnológicos y materiales</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>CONTENIDO OFICIAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 26 - Sistemas de alerta y análisis de datos</strong></td>
+                  <td>Las municipalidades pueden disponer de sistemas de alerta ciudadana y análisis de datos. Si son privados, deben licitarse. Los informes generados deben remitirse al Ministerio de Seguridad Pública y a las Fuerzas de Orden de forma gratuita.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Escenario de Aplicación del Art. 20 y Art. 25</span>
+          <p><strong>Recuerda dos reglas de oro de este bloque:</strong></p>
+          <ol>
+            <li><strong>Art. 20 (Detención en flagrancia):</strong> El inspector municipal puede traspasar los límites comunales <strong>solo para practicar la detención en flagrancia</strong>, comunicando de inmediato a las Fuerzas de Orden.</li>
+            <li><strong>Art. 25 (Sistemas de televigilancia):</strong> Las cámaras y drones municipales <strong>solo pueden grabar imágenes, NO sonidos</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-8">
+          <h3>📝 Repaso y Comprobación del Módulo 8</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según el Art. 25 de la Ley N° 21.802, ¿qué restricción rige sobre los sistemas de televigilancia municipal (cámaras, drones)?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m8q1" value="a"> Solo se pueden grabar imágenes, NO sonidos.</label>
+              <label class="quiz-option-label"><input type="radio" name="m8q1" value="b"> Solo pueden grabar audio ambiental sin video.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. Según el Art. 20 de la Ley N° 21.802, ¿en qué único caso los inspectores municipales pueden traspasar los límites comunales?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m8q2" value="a"> Para cursar partes empadronados de tránsito en otra comuna.</label>
+              <label class="quiz-option-label"><input type="radio" name="m8q2" value="b"> Solo para practicar la detención en persecución de delito flagrante (comunicando de inmediato a las Fuerzas de Orden).</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(8, {m8q1:'a', m8q2:'b'})">✔ Comprobar respuestas del Módulo 8</button>
+          <div class="feedback-msg" id="feedback-m8"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 10: MÓDULO 9 - LEY N° 21.802 (PÁRRAFOS 4°, 5°, 6° Y 7°: ART. 27 AL 48)
+           ========================================================= -->
+      <section class="page-section" id="page-10">
+        <div class="module-header">
+          <span class="module-tag">Módulo 9 de 11</span>
+          <h2>10. Ley N° 21.802 - Párrafos 4°, 5°, 6° y 7° (Art. 27 al Art. 48)</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Párrafo 4° (Art. 27 al 36)</span>
+          <h3>Párrafo 4° - Funciones de prevención, fiscalización y convivencia</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>FUNCIÓN</th>
+                  <th>DETALLE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 27</strong></td>
+                  <td>Vinculación con la comunidad</td>
+                  <td>Promover y difundir medidas de seguridad pública, conocer el espacio local e informar sobre ordenanzas municipales y sus sanciones</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 28</strong></td>
+                  <td>Patrullaje preventivo</td>
+                  <td>Vigilar el espacio local para detectar dinámicas delictuales y riesgos de seguridad pública</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 29</strong></td>
+                  <td>Inspección y fiscalización</td>
+                  <td>Fiscalizar Ley de Bebidas Alcohólicas, Comercio Ilegal, Tránsito y ordenanzas municipales (acomodadores, comercio en vía pública, patentes)</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 30</strong></td>
+                  <td>Prestación de auxilio</td>
+                  <td>Prestar auxilio inmediato a víctimas de afectación física y a víctimas en caso de delito flagrante</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 31</strong></td>
+                  <td>Medidas en emergencias</td>
+                  <td>Establecer perímetros de seguridad, facilitar acceso a instituciones, registrar datos de testigos y restablecer normalidad en emergencias, siempre comunicando a Carabineros</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 32</strong></td>
+                  <td>Labores de televigilancia</td>
+                  <td>Operar sistemas de cámaras con respeto a la privacidad. Imágenes conservadas mínimo 15 días y destruidas a los 180 días salvo requerimiento del Ministerio Público</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 33</strong></td>
+                  <td>Tratamiento de datos de vehículos</td>
+                  <td>Convenios con el Registro Civil para tratar datos de patentes y vehículos con fines de prevención del delito y seguimiento en flagrancia</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 34</strong></td>
+                  <td>Control del comercio ambulante</td>
+                  <td>Controlar e incautar mercancías sin cumplir normativa vigente o en situación de abandono en la vía pública</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 35</strong></td>
+                  <td>Requerimiento de identidad</td>
+                  <td>Solicitar documentos de identidad para cursar infracciones. Máximo 1 hora. Si no se puede verificar, llamar a Carabineros</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 36</strong></td>
+                  <td>Rescate de animales</td>
+                  <td>Colaborar en rescate de mascotas y animales, denunciar infracciones e informar al SAG o instituciones de rescate según corresponda</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Párrafo 5° (Art. 37 al 42)</span>
+          <h3>Párrafo 5° - Funciones coadyuvantes con las Fuerzas de Orden</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>FUNCIÓN COADYUVANTE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 37</strong></td>
+                  <td><strong>Intervención en procedimientos policiales:</strong> solo en calidad de apoyo, con elementos defensivos y siguiendo protocolos del Ministerio de Seguridad Pública. El nivel de riesgo determina el tipo de intervención</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 38</strong></td>
+                  <td><strong>Patrullaje mixto:</strong> coordinación con Carabineros para patrullajes conjuntos en el territorio comunal</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 39</strong></td>
+                  <td><strong>Protección de víctimas VIF:</strong> colaborar con FF.OO. en medidas de protección ordenadas por el Ministerio Público o tribunales de familia</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 40</strong></td>
+                  <td><strong>Control de medidas cautelares VIF:</strong> verificar el cumplimiento de medidas cautelares y accesorias en casos de VIF mediante patrullaje, visitas domiciliarias u otros medios. Pueden detener si se constata quebrantamiento</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 41</strong></td>
+                  <td><strong>Control de alcohol y drogas:</strong> colaborar bajo dirección de Carabineros en pruebas de alcoholemia y drogas en vía pública</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 42</strong></td>
+                  <td><strong>Colaboración en control de identidad:</strong> apoyar a las policías en controles de identidad conforme a la Ley N° 20.931</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original - Párrafos 6° y 7° (Art. 43 al 48) y Resumen Esquemático</span>
+          <h3>Párrafo 6° - Elementos defensivos y de protección</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>CONTENIDO OFICIAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 43 - Elementos defensivos</strong></td>
+                  <td>La municipalidad debe proveer elementos defensivos a los inspectores. Pueden incluir: cascos, chalecos antibalas, chalecos anticortes, lentes, esposas, bastones retráctiles, elementos lacrimógenos naturales y de pulsación eléctrica. NO pueden portarse armas reguladas por la Ley N° 17.798 más allá de lo indicado. Uso exclusivo en funciones, nunca para control del orden público.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 44 - Transferencia de recursos</strong></td>
+                  <td>La Subsecretaría de Prevención del Delito puede celebrar convenios con municipalidades para financiar la compra de elementos de protección. La asignación considera criterios de equidad territorial, demográficos y de vulnerabilidad socio-delictual.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 45 - Seguro de vida</strong></td>
+                  <td>La municipalidad puede contratar un seguro de vida para los inspectores, con un mínimo de 250 UF. Prioridad para quienes realizan patrullaje, fiscalización o funciones coadyuvantes. La Subsecretaría puede financiarlo si la municipalidad no tiene presupuesto.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 46 - Elementos defensivos para otros inspectores</strong></td>
+                  <td>La municipalidad puede proveer elementos defensivos a inspectores de otras áreas (ej. tránsito, bebidas alcohólicas) si el alcalde estima que el cargo implica riesgo. Requisito: haber aprobado las capacitaciones de las letras a), b), c) y d) del Art. 50.</td>
+                </tr>
+                <tr>
+                  <td><strong>Art. 47 - Sistemas de registro audiovisual (bodycam)</strong></td>
+                  <td>Los inspectores pueden usar sistemas de registro audiovisual (bodycam). Las imágenes deben conservarse mínimo 15 días y destruirse a los 180 días salvo requerimiento judicial. El inspector que oculte o altere los registros será sancionado con suspensión del empleo y multa de 15 a 20 UTM, además de las penas penales que correspondan.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top:20px;">Párrafo 7° - Derechos Humanos</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>ARTÍCULO</th>
+                  <th>CONTENIDO OFICIAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Art. 48 - Respeto y protección de los Derechos Humanos</strong></td>
+                  <td>En el ejercicio de todas sus funciones, los inspectores deben respetar y proteger los derechos humanos y libertades fundamentales, especialmente de personas vulnerables, NNA (niños, niñas y adolescentes) y personas en situación de discapacidad. Se prohíbe expresamente todo acto de tortura, tratos crueles, inhumanos o degradantes, conforme a los tratados internacionales ratificados por Chile.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert-important" style="text-align: center; margin-top: 20px;">
+            <h4>RESUMEN ESQUEMÁTICO</h4>
+            <p><strong>El inspector de seguridad municipal actúa siempre como APOYO, nunca reemplaza a Carabineros ni a la PDI.</strong></p>
+            <p style="font-size: 1.1rem; color: var(--accent-gold); font-weight: bold;">Previene • Fiscaliza • Colabora • Comunica • Deriva</p>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-9">
+          <h3>📝 Repaso y Comprobación del Módulo 9</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según los artículos 32 y 47 de la Ley N° 21.802, ¿por cuánto tiempo deben conservarse como mínimo y a los cuántos días deben destruirse las imágenes de televigilancia y bodycam (salvo requerimiento fiscal/judicial)?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m9q1" value="a"> Conservadas mínimo 15 días y destruidas a los 180 días.</label>
+              <label class="quiz-option-label"><input type="radio" name="m9q1" value="b"> Conservadas mínimo 2 días y destruidas a los 10 días.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. Según el Art. 35 (Requerimiento de identidad para cursar infracciones), ¿cuál es el tiempo máximo del procedimiento y qué debe hacerse si no se puede verificar la identidad?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m9q2" value="a"> Máximo 1 hora. Si no se puede verificar, llamar a Carabineros.</label>
+              <label class="quiz-option-label"><input type="radio" name="m9q2" value="b"> Máximo 8 horas en recinto municipal.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>3. Según el Art. 45, ¿cuál es el monto mínimo del seguro de vida que la municipalidad puede contratar para los inspectores?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m9q3" value="a"> Mínimo de 250 UF.</label>
+              <label class="quiz-option-label"><input type="radio" name="m9q3" value="b"> Mínimo de 20 UTM.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(9, {m9q1:'a', m9q2:'a', m9q3:'a'})">✔ Comprobar respuestas del Módulo 9</button>
+          <div class="feedback-msg" id="feedback-m9"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 11: MÓDULO 10 - TABLA DE CLAVES RADIALES
+           ========================================================= -->
+      <section class="page-section" id="page-11">
+        <div class="module-header">
+          <span class="module-tag">Módulo 10 de 11</span>
+          <h2>11. Tabla de Claves Radiales (Codificación Oficial)</h2>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Buscador Instantáneo de Claves Radiales</span>
+          <label for="radialSearchInput"><strong>🔍 Filtra por número de clave o descripción (ej. "67", "39", "Comercio", "Ruidos"):</strong></label>
+          <input type="text" id="radialSearchInput" class="search-bar" placeholder="Escribe aquí para buscar una clave radial..." oninput="filterRadialTable()">
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original Íntegro - Tabla de Claves Radiales</span>
+          <h3>TABLA DE CLAVES RADIALES (Uso exclusivo de unidades de seguridad - Material de capacitación)</h3>
+          <div class="table-responsive">
+            <table id="radialCodesTable">
+              <thead>
+                <tr>
+                  <th>CÓD.</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>CÓD.</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>CÓD.</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>CÓD.</th>
+                  <th>DESCRIPCIÓN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CLAVE 1</strong></td><td>ABIGEATO</td>
+                  <td><strong>CLAVE 21</strong></td><td>DAÑOS</td>
+                  <td><strong>CLAVE 44</strong></td><td>LESIONADO</td>
+                  <td><strong>CLAVE 65</strong></td><td>ENTREGUE RESULTADO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 2</strong></td><td>ACCIDENTE TRANSITO</td>
+                  <td><strong>CLAVE 22</strong></td><td>DETENIDOS</td>
+                  <td><strong>CLAVE 45</strong></td><td>LLAME POR TELÉFONO</td>
+                  <td><strong>CLAVE 66</strong></td><td>RIÑA</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 3</strong></td><td>ACUARTELAMIENTO</td>
+                  <td><strong>CLAVE 23</strong></td><td>DESÓRDENES</td>
+                  <td><strong>CLAVE 46</strong></td><td>MANTENGASE EN EL LUGAR</td>
+                  <td><strong>CLAVE 67</strong></td><td>ROBO... EFECTUANDOSE</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 4</strong></td><td>ADOPTE MEDIDAS DE SEGURIDAD</td>
+                  <td><strong>CLAVE 24</strong></td><td>AUTORIDADES EN LA CENTRAL</td>
+                  <td><strong>CLAVE 47</strong></td><td>MUERTO</td>
+                  <td><strong>CLAVE 68</strong></td><td>SAQUEO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 5</strong></td><td>AGRESIÓN</td>
+                  <td><strong>CLAVE 25</strong></td><td>DISPAROS</td>
+                  <td><strong>CLAVE 48</strong></td><td>SOLICITO NOVEDADES</td>
+                  <td><strong>CLAVE 69</strong></td><td>SECUESTRO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 6</strong></td><td>ALARMA</td>
+                  <td><strong>CLAVE 26</strong></td><td>DROGAS</td>
+                  <td><strong>CLAVE 49</strong></td><td>SIN NOVEDAD</td>
+                  <td><strong>CLAVE 70</strong></td><td>SIN EFECTO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 7</strong></td><td>AUTENTIFIQUESE</td>
+                  <td><strong>CLAVE 27</strong></td><td>EBRIO</td>
+                  <td><strong>CLAVE 50</strong></td><td>NORMALICE SERVICIO</td>
+                  <td><strong>CLAVE 71</strong></td><td>ENCARGO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 8</strong></td><td>APLIQUE CIERRE CIUDAD (CIERRE COMUNAL)</td>
+                  <td><strong>CLAVE 28</strong></td><td>EDIFICIO DE...</td>
+                  <td><strong>CLAVE 51</strong></td><td>OBSTÁCULO EN LA VÍA PÚBLICA</td>
+                  <td><strong>CLAVE 72</strong></td><td>SOLUCIONADO EN EL LUGAR</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 9</strong></td><td>APURE PROCEDIMIENTO</td>
+                  <td><strong>CLAVE 29</strong></td><td>ENTREVISTA</td>
+                  <td><strong>CLAVE 52</strong></td><td>OCUPACIÓN DE...</td>
+                  <td><strong>CLAVE 73</strong></td><td>SOLICITA AUTORIZACIÓN PARA SALIR DEL SEG</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 10</strong></td><td>ARMAMENTO</td>
+                  <td><strong>CLAVE 30</strong></td><td>EN DIRECCIÓN</td>
+                  <td><strong>CLAVE 54</strong></td><td>OPERATIVO DE...</td>
+                  <td><strong>CLAVE 74</strong></td><td>SUICIDIO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 11</strong></td><td>ALIMENTACIÓN</td>
+                  <td><strong>CLAVE 31</strong></td><td>ESCOLTAR A...</td>
+                  <td><strong>CLAVE 55</strong></td><td>EFECTUO PATRULLAJE</td>
+                  <td><strong>CLAVE 75</strong></td><td>TRASLADESE A...</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 12</strong></td><td>ALLANAMIENTO</td>
+                  <td><strong>CLAVE 32</strong></td><td>EXPLOSIVOS</td>
+                  <td><strong>CLAVE 56</strong></td><td>PASE A CANAL INTERNO</td>
+                  <td><strong>CLAVE 76</strong></td><td>UBICACIÓN Y DIRECCIÓN</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 13</strong></td><td>ASALTO A MANO ARMADA</td>
+                  <td><strong>CLAVE 33</strong></td><td>EXTREMISTAS</td>
+                  <td><strong>CLAVE 57</strong></td><td>PRESTE COOPERACIÓN</td>
+                  <td><strong>CLAVE 77</strong></td><td>UNIFORMADO SOSPECHOSO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 14</strong></td><td>FUNCIONARIO ATACADO</td>
+                  <td><strong>CLAVE 34</strong></td><td>FACILIDADES</td>
+                  <td><strong>CLAVE 58</strong></td><td>INVOLUCRA PERSONAL DE...</td>
+                  <td><strong>CLAVE 78</strong></td><td>USURPACIÓN DE FUNCIÓN</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 15</strong></td><td>COMERCIO AMBULANTE</td>
+                  <td><strong>CLAVE 35</strong></td><td>FISCALICESE</td>
+                  <td><strong>CLAVE 59</strong></td><td>INVOLUCRA AUTORIDADES</td>
+                  <td><strong>CLAVE 79</strong></td><td>VIGILANCIA ESPECIAL</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 16</strong></td><td>COMUNICACIÓN INTERFERIDA</td>
+                  <td><strong>CLAVE 36</strong></td><td>INDIVIDUO ARMADO</td>
+                  <td><strong>CLAVE 60</strong></td><td>PROTESTA</td>
+                  <td><strong>CLAVE 80</strong></td><td>VIOLACIÓN</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 17</strong></td><td>COMUNICACIÓN RESTRINGIDA</td>
+                  <td><strong>CLAVE 37</strong></td><td>SOSPECHOSO O GRUPO SOSPECHOSO</td>
+                  <td><strong>CLAVE 61</strong></td><td>RAPTO</td>
+                  <td><strong>CLAVE 81</strong></td><td>VEHICULO ABANDONADO</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 18</strong></td><td>CONTROLE A</td>
+                  <td><strong>CLAVE 38</strong></td><td>HUELGA</td>
+                  <td><strong>CLAVE 62</strong></td><td>RECOJASE EN EL CUARTEL</td>
+                  <td><strong>CLAVE 82</strong></td><td>RUIDOS MOLESTOS</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 19</strong></td><td>CUARTEL ATACADO</td>
+                  <td><strong>CLAVE 39</strong></td><td>HURTO</td>
+                  <td><strong>CLAVE 63</strong></td><td>RECLAMO</td>
+                  <td>—</td><td>—</td>
+                </tr>
+                <tr>
+                  <td><strong>CLAVE 20</strong></td><td>CUARTEL DE...</td>
+                  <td><strong>CLAVE 43</strong></td><td>JEFE DE, O JEFE DE TURNO</td>
+                  <td><strong>CLAVE 64</strong></td><td>RETIRESE DEL LUGAR</td>
+                  <td>—</td><td>—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-10">
+          <h3>📝 Repaso y Comprobación del Módulo 10</h3>
+          <div class="quiz-question">
+            <p><strong>1. En comunicación radial operativa, ¿qué significan respectivamente la CLAVE 15, la CLAVE 43 y la CLAVE 82?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m10q1" value="a"> Clave 15: Comercio Ambulante | Clave 43: Jefe de, o Jefe de Turno | Clave 82: Ruidos Molestos.</label>
+              <label class="quiz-option-label"><input type="radio" name="m10q1" value="b"> Clave 15: Accidente Tránsito | Clave 43: Alarma | Clave 82: Abigeato.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. Si la central radial indica "CLAVE 49" y luego "CLAVE 55", ¿qué se está comunicando?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m10q2" value="a"> Clave 49: Sin novedad | Clave 55: Efectúo patrullaje.</label>
+              <label class="quiz-option-label"><input type="radio" name="m10q2" value="b"> Clave 49: Muerto | Clave 55: Saqueo.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(10, {m10q1:'a', m10q2:'a'})">✔ Comprobar respuestas del Módulo 10</button>
+          <div class="feedback-msg" id="feedback-m10"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 12: MÓDULO 11 - ORDENANZAS MUNICIPALES DE SANTIAGO
+           ========================================================= -->
+      <section class="page-section" id="page-12">
+        <div class="module-header">
+          <span class="module-tag">Módulo 11 de 11</span>
+          <h2>Guía Resumen: Ordenanzas Municipales de Santiago</h2>
+        </div>
+
+        <div class="original-box">
+          <span class="original-badge">Contenido Original Íntegro - Guía Resumen Ordenanzas Municipales de Santiago</span>
+          <h3>MUNICIPALIDAD DE SANTIAGO - GUÍA RESUMEN: ORDENANZAS MUNICIPALES DE SANTIAGO</h3>
+          <p><em>Ámbito de aplicación, regulaciones clave y sistema de fiscalización</em></p>
+
+          <h4>1. Aspectos Generales y Marco Legal</h4>
+          <p>Las ordenanzas municipales de la comuna de Santiago son normas generales y obligatorias dictadas por la alcaldía con la aprobación del Concejo Municipal. Tienen validez en todo el territorio de la comuna y regulan la convivencia, el uso del espacio público, el comercio y el desarrollo urbano. Las infracciones a estas normas son derivadas a los Juzgados de Policía Local y pueden aplicar multas de hasta <strong>5 UTM</strong>.</p>
+
+          <h4>2. Clasificación de las Normativas Principales</h4>
+          <p>A continuación, se detallan las ordenanzas más relevantes divididas por sus respectivas áreas de control:</p>
+
+          <h4>Área Financiera y Derechos Municipales</h4>
+          <p><strong>Ordenanza N° 94: Derechos por Permisos y Servicios Municipales</strong></p>
+          <p>Es una de las herramientas administrativas más importantes de la gestión local. Regula de manera integrada los cobros y los montos de las tasas que deben pagar las personas y empresas por los siguientes conceptos:</p>
+          <ul>
+            <li><strong>Tránsito y Vehículos:</strong> Derechos asociados a trámites en la Dirección de Tránsito y Transporte Público.</li>
+            <li><strong>Actividades Lucrativas:</strong> Cobros por el ejercicio de actividades comerciales o el uso de Bienes Nacionales de Uso Público (BNUP).</li>
+            <li><strong>Urbanización y Edificación:</strong> Derechos relativos a la construcción de obras y modificaciones urbanas.</li>
+            <li><strong>Control Sanitario y Ornato:</strong> Tarifas aplicadas por inspección de higiene, mantención de áreas verdes y colocación de propaganda en la vía pública.</li>
+          </ul>
+
+          <h4>Área de Medio Ambiente, Aseo y Espacios Públicos</h4>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Normativa</th>
+                  <th>Enfoque Principal</th>
+                  <th>Regulaciones y Obligaciones Clave</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ordenanza N° 35/83</strong></td>
+                  <td>Conservación de Vías Públicas, Parques y Jardines</td>
+                  <td>Protege de manera estricta el mobiliario urbano, los árboles y la vegetación de plazas. Regula el correcto uso de los espacios recreativos.</td>
+                </tr>
+                <tr>
+                  <td><strong>Ordenanza N° 77</strong></td>
+                  <td>Aseo y Limpieza Urbana</td>
+                  <td>Regula la gestión de residuos domiciliarios y comerciales, establece los horarios obligatorios para sacar la basura y fija el deber de los vecinos de mantener limpias sus aceras.</td>
+                </tr>
+                <tr>
+                  <td><strong>Ordenanza N° 130</strong></td>
+                  <td>Control de Cableado Aéreo y Subterráneo</td>
+                  <td>Normativa enfocada en el ordenamiento y retiro obligatorio de tendidos eléctricos y de telecomunicaciones en desuso para reducir el riesgo físico y la contaminación visual.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Área de Comercio, Urbanismo y Control Territorial</h4>
+          <p><strong>Regulación del Comercio en la Vía Pública</strong></p>
+          <ul>
+            <li><strong>Ordenanza N° 59 (Comercio Estacionado y Ambulante):</strong> Establece parámetros estrictos para las autorizaciones de venta en calles, plazas y parques. Define que los permisos en Bienes Nacionales de Uso Público son precarios, intransferibles e intransmisibles. Los comerciantes autorizados tienen la obligación estricta de portar siempre su cédula de identidad y su permiso/patente al día para ser exhibidos ante cualquier fiscalización.</li>
+            <li><strong>Ordenanza N° 124:</strong> Regula específicamente las condiciones para la exposición y comercio de artesanías, artes, oficios y pequeñas producciones con manufactura manual dentro de la comuna.</li>
+          </ul>
+
+          <p><strong>Ordenamiento Territorial y Plan Regulador</strong></p>
+          <ul>
+            <li><strong>Ordenanza Local del Plan Regulador Comunal (PRCS):</strong> Instrumento técnico que define la zonificación de Santiago, las alturas máximas permitidas para las edificaciones, los usos de suelo (residencial, comercial, mixto) y las reglas de protección para los Monumentos Nacionales y las Zonas de Conservación Histórica.</li>
+          </ul>
+
+          <h4>Regulaciones de Sectores Críticos (Ejemplo de Control Hiperlocal)</h4>
+          <p><strong>Ordenanza N° 110: Administración y Uso de la Plaza de Armas</strong></p>
+          <p>Esta ordenanza funciona como un estatuto especial para proteger el corazón del casco histórico de la capital, imponiendo las siguientes restricciones directas:</p>
+          <ul>
+            <li><strong>Consumo de Sustancias:</strong> Prohibición absoluta del consumo de alcohol y drogas en todo el perímetro.</li>
+            <li><strong>Mobiliario Itinerante:</strong> Regulación estricta de la instalación de infraestructura temporal (como los paños de artesanos o las mesas de los ajedrecistas).</li>
+            <li><strong>Contaminación Acústica y Publicidad:</strong> Restricción severa de letreros comerciales y prohibición del uso de altavoces o parlantes fuera de los horarios o niveles de decibeles autorizados por el municipio.</li>
+          </ul>
+
+          <h4>3. El Rol de la Dirección de Inspección Municipal</h4>
+          <p>Para asegurar que estas normativas no queden solo en el papel, el municipio cuenta con un despliegue operativo continuo:</p>
+
+          <!-- Diagrama vectorial fiel al esquema de la página 23 del documento original -->
+          <div class="svg-diagram-container" role="img" aria-label="Esquema operativo de Inspectores y Patrulleros Municipales">
+            <svg viewBox="0 0 700 280" width="100%" height="260">
+              <!-- Nodo Superior -->
+              <rect x="200" y="10" width="300" height="54" rx="10" fill="#1e3a8a" stroke="#f59e0b" stroke-width="2"/>
+              <text x="350" y="34" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">INSPECTORES Y</text>
+              <text x="350" y="54" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">PATRULLEROS MUNICIPALES</text>
+
+              <!-- Líneas de conexión -->
+              <path d="M260 64 L160 105" stroke="#60a5fa" stroke-width="3" fill="none"/>
+              <path d="M440 64 L540 105" stroke="#60a5fa" stroke-width="3" fill="none"/>
+
+              <!-- Cajas Intermedias -->
+              <rect x="30" y="105" width="260" height="65" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+              <text x="160" y="132" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">Fiscalizan activamente el</text>
+              <text x="160" y="152" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">comercio, aseo y uso de BNUP.</text>
+
+              <rect x="410" y="105" width="260" height="65" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+              <text x="540" y="132" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">Trabajan en conjunto con</text>
+              <text x="540" y="152" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">Carabineros de Chile en terreno.</text>
+
+              <!-- Conector central hacia abajo -->
+              <path d="M160 170 L160 205" stroke="#94a3b8" stroke-width="2"/>
+              <path d="M540 170 L540 190 L160 190" stroke="#94a3b8" stroke-width="2" fill="none"/>
+
+              <!-- Cajas Inferiores -->
+              <rect x="30" y="205" width="260" height="60" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+              <text x="160" y="232" fill="#e9d5ff" font-size="13" font-weight="bold" text-anchor="middle">Denuncia / Citación al</text>
+              <text x="160" y="250" fill="#e9d5ff" font-size="13" font-weight="bold" text-anchor="middle">Juzgado de Policía Local</text>
+
+              <!-- Flecha hacia multa -->
+              <line x1="295" y1="235" x2="400" y2="235" stroke="#f59e0b" stroke-width="4"/>
+              <polygon points="400,228 412,235 400,242" fill="#f59e0b"/>
+
+              <rect x="415" y="205" width="255" height="60" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+              <text x="542" y="232" fill="#fca5a5" font-size="14" font-weight="bold" text-anchor="middle">Aplicación de Multas</text>
+              <text x="542" y="252" fill="#fca5a5" font-size="14" font-weight="bold" text-anchor="middle">de hasta 5 UTM</text>
+            </svg>
+          </div>
+
+          <ul>
+            <li><strong>Función Operativa:</strong> Los inspectores y patrulleros municipales recorren las calles y los ejes comerciales prioritarios para fiscalizar que las actividades comerciales cuenten con sus patentes correspondientes y que los espacios públicos se utilicen de manera correcta.</li>
+            <li><strong>Coordinación Policial:</strong> En casos de comercio ilegal masivo o alteración del orden, actúan en operativos conjuntos con Carabineros de Chile.</li>
+            <li><strong>Resolución Jurídica:</strong> Ante una falta detectada, los funcionarios cursan una citación (parte), dejando la resolución del caso y el cálculo de la multa en manos de los jueces de Policía Local correspondientes.</li>
+          </ul>
+        </div>
+
+        <div class="quiz-box" id="mod-quiz-11">
+          <h3>📝 Repaso y Comprobación del Módulo 11</h3>
+          <div class="quiz-question">
+            <p><strong>1. Según la Guía Resumen de Ordenanzas Municipales de Santiago, ¿a qué tribunal se derivan las infracciones y hasta qué monto pueden llegar las multas?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m11q1" value="a"> A los Juzgados de Policía Local, con multas de hasta 5 UTM.</label>
+              <label class="quiz-option-label"><input type="radio" name="m11q1" value="b"> A la Corte de Apelaciones, con multas de hasta 100 UF.</label>
+            </div>
+          </div>
+
+          <div class="quiz-question">
+            <p><strong>2. ¿Qué ordenanza regula el Comercio Estacionado y Ambulante en Santiago (estableciendo que los permisos en BNUP son precarios, intransferibles e intransmisibles) y cuál regula la Administración y Uso de la Plaza de Armas?</strong></p>
+            <div class="quiz-options">
+              <label class="quiz-option-label"><input type="radio" name="m11q2" value="a"> Ordenanza N° 59 (Comercio Estacionado y Ambulante) y Ordenanza N° 110 (Plaza de Armas).</label>
+              <label class="quiz-option-label"><input type="radio" name="m11q2" value="b"> Ordenanza N° 10 y Ordenanza N° 20.</label>
+            </div>
+          </div>
+
+          <button class="btn btn-success" onclick="verifyModuleQuiz(11, {m11q1:'a', m11q2:'a'})">✔ Comprobar respuestas del Módulo 11</button>
+          <div class="feedback-msg" id="feedback-m11"></div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 13: RESUMEN DE APRENDIZAJE
+           ========================================================= -->
+      <section class="page-section" id="page-13">
+        <div class="module-header">
+          <span class="module-tag">Síntesis Global</span>
+          <h2>Resumen de Aprendizaje (Síntesis Complementaria)</h2>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Material Complementario - Síntesis de Estudio Previa a la Evaluación</span>
+          <p>Este resumen complementario sintetiza los ejes esenciales estudiados a lo largo de los 11 módulos (sin sustituir el contenido íntegro que puedes revisar en cada apartado):</p>
+          <ul>
+            <li><strong>Seguridad Pública y Rol Municipal:</strong> La Seguridad Pública protege la integridad física, derechos y libertades públicas. Es tarea del Estado (Carabineros, PDI, Gendarmería) y de actores complementarios esenciales como las Municipalidades y la Seguridad Privada.</li>
+            <li><strong>Inspectores Municipales (Ley N° 18.695 y Ley N° 21.802):</strong> Actúan siempre en calidad de <strong>APOYO (Previene, Fiscaliza, Colabora, Comunica, Deriva)</strong> y tienen estrictamente prohibido ejercer atribuciones propias de las Fuerzas de Orden y Seguridad Pública (Art. 18 Ley N° 21.802).</li>
+            <li><strong>Seguridad Privada (OS-10):</strong> Regulada por DL N° 3.607 y DS N° 93/1985, fiscalizada por Carabineros (OS-10). El Vigilante Privado está autorizado a portar arma de fuego; el Guardia de Seguridad no.</li>
+            <li><strong>Teoría del Delito, Robo y Hurto:</strong> Delito es toda acción u omisión voluntaria penada por la ley (Art. 1° CP). Se clasifica en Crimen, Simple Delito y Falta. La diferencia entre <strong>Robo (Clave 67)</strong> y <strong>Hurto (Clave 39)</strong> radica en el medio empleado: violencia, intimidación o fuerza en las cosas configuran Robo; la apropiación sigilosa sin ellas es Hurto.</li>
+            <li><strong>Alcohol en la Conducción y Legítima Defensa:</strong> Bajo la influencia del alcohol: 0,3 a 0,79 g/l; Estado de ebriedad: 0,8 g/l o más. La Ley Emilia sanciona con mínimo 1 año de cárcel efectiva, inhabilidad perpetua y comiso del vehículo ante lesiones graves, gravísimas o muerte en ebriedad. La Legítima Defensa (Art. 10 N° 4, 5 y 6 CP) exige agresión ilegítima, necesidad racional del medio y falta de provocación suficiente.</li>
+            <li><strong>VIF (Ley N° 20.066) y Flagrancia (Art. 130 CPP):</strong> La VIF contempla violencia física, psicológica, sexual y económica (Fono Familia 149). La flagrancia comprende flagrancia actual, por persecución, por encontrar y extendida (hasta 12 horas).</li>
+            <li><strong>Ordenanzas Municipales de Santiago:</strong> Infracciones derivadas al Juzgado de Policía Local (multas de hasta 5 UTM). Destacan las Ordenanzas N° 94 (Derechos), N° 35/83 (Parques y Jardines), N° 77 (Aseo), N° 130 (Cableado en desuso), N° 59 (Comercio Estacionado y Ambulante), N° 124 (Artesanía) y N° 110 (Plaza de Armas).</li>
+          </ul>
+          <div style="margin-top: 18px; text-align: center;">
+            <button class="btn btn-gold" onclick="goToPage(14)">✍️ Ir a la Prueba Final Interactiva</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 14: PRUEBA FINAL INTERACTIVA
+           ========================================================= -->
+      <section class="page-section" id="page-14">
+        <div class="module-header">
+          <span class="module-tag">Evaluación Sumativa</span>
+          <h2>Prueba Final Interactiva (22 Preguntas)</h2>
+        </div>
+
+        <div class="complement-box">
+          <span class="complement-badge">Autoevaluación Local en Escala Chilena (1,0 a 7,0)</span>
+          <p>Responde las <strong>22 preguntas</strong> distribuidas entre todos los módulos del manual. Puedes ajustar el porcentaje de exigencia (por defecto <strong>60 %</strong> para nota <strong>4,0</strong>). <em>Nota: Esta evaluación se ejecuta localmente en tu navegador como herramienta de autoevaluación formativa, sin enviar datos a servidores externos.</em></p>
+          <div style="margin-top: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <label for="passingThresholdInput"><strong>Exigencia mínima de aprobación (%):</strong></label>
+            <input type="number" id="passingThresholdInput" value="60" min="50" max="80" style="width: 80px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color); background: #0f172a; color: #fff;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">(Con 60%, obtener 60% de logro equivale a nota 4,0)</span>
+          </div>
+        </div>
+
+        <div id="finalExamContainer"></div>
+
+        <div class="alert-important" id="examWarningBox" style="display: none;"></div>
+
+        <div style="margin-top: 24px; text-align: center;">
+          <button class="btn btn-gold" style="font-size: 1.1rem; padding: 12px 28px;" onclick="gradeFinalExam()">✅ Finalizar y corregir prueba</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PÁGINA 15: RESULTADOS Y CORRECCIONES
+           ========================================================= -->
+      <section class="page-section" id="page-15">
+        <div class="module-header">
+          <span class="module-tag">Informe de Evaluación</span>
+          <h2>Resultados y Correcciones Detalladas</h2>
+        </div>
+
+        <div id="resultsSummaryPanel">
+          <p style="color: var(--text-muted);">Aún no has entregado la prueba final. Dirígete a la pestaña <strong>Prueba Final</strong> para responder y calificar tu evaluación.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;" id="resultsActionButtons" style="display:none;">
+          <button class="btn btn-secondary" onclick="filterCorrections('errors')">🔍 Revisar solo mis errores</button>
+          <button class="btn btn-secondary" onclick="filterCorrections('all')">📋 Ver todas las preguntas</button>
+          <button class="btn btn-secondary" onclick="goToPage(1)">📖 Volver a estudiar</button>
+          <button class="btn btn-gold" onclick="retakeFinalExam()">🔄 Repetir prueba</button>
+        </div>
+
+        <div id="detailedCorrectionsList"></div>
+      </section>
+
+      <!-- PIE DE NAVEGACIÓN ENTRE PÁGINAS -->
+      <div class="page-nav-footer">
+        <button class="btn btn-secondary" id="prevPageBtn" onclick="changePage(-1)">⬅ Anterior</button>
+        <span id="footerPageStatus" style="color: var(--text-muted); font-size: 0.9rem;"></span>
+        <button class="btn" id="nextPageBtn" onclick="changePage(1)">Siguiente ➡</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT INTEGRADA -->
+  <script>
+    const STORAGE_KEY = 'curso_seguridad_municipal_v1';
+
+    const pagesMeta = [
+      { id: 0, title: "Portada Oficial", type: "info" },
+      { id: 1, title: "Índice General", type: "info" },
+      { id: 2, title: "Mód. 1: Seguridad Pública e Inspectores", type: "module", modNum: 1 },
+      { id: 3, title: "Mód. 2: Seguridad Privada (OS-10)", type: "module", modNum: 2 },
+      { id: 4, title: "Mód. 3: ¿Qué es un Delito?", type: "module", modNum: 3 },
+      { id: 5, title: "Mód. 4: Robo vs. Hurto", type: "module", modNum: 4 },
+      { id: 6, title: "Mód. 5: Alcohol y Legítima Defensa", type: "module", modNum: 5 },
+      { id: 7, title: "Mód. 6: VIF y Flagrancia", type: "module", modNum: 6 },
+      { id: 8, title: "Mód. 7: Ley 21.802 (Párrafo 1°)", type: "module", modNum: 7 },
+      { id: 9, title: "Mód. 8: Ley 21.802 (Párrafos 2° y 3°)", type: "module", modNum: 8 },
+      { id: 10, title: "Mód. 9: Ley 21.802 (Párrafos 4° al 7°)", type: "module", modNum: 9 },
+      { id: 11, title: "Mód. 10: Tabla de Claves Radiales", type: "module", modNum: 10 },
+      { id: 12, title: "Mód. 11: Ordenanzas de Santiago", type: "module", modNum: 11 },
+      { id: 13, title: "Resumen de Aprendizaje", type: "info" },
+      { id: 14, title: "Prueba Final Interactiva", type: "exam" },
+      { id: 15, title: "Resultados y Correcciones", type: "results" }
+    ];
+
+    const finalQuestions = [
+      {
+        id: 1,
+        moduleRef: "Módulo 1 - 1. Seguridad Pública",
+        q: "¿Cómo define el manual la Seguridad Pública?",
+        options: [
+          "La función exclusiva de las policías para investigar crímenes internacionales.",
+          "La función del Estado orientada a proteger la integridad física y los derechos de las personas, así como el libre ejercicio de las libertades públicas.",
+          "El servicio privado contratado por empresas para proteger recintos bancarios.",
+          "La facultad municipal de dictar leyes penales en cada comuna."
+        ],
+        correct: 1,
+        explanation: "Textualmente el apartado 1 establece: 'La Seguridad Pública es la función del Estado orientada a proteger la integridad física y los derechos de las personas, así como el libre ejercicio de las libertades públicas.'"
+      },
+      {
+        id: 2,
+        moduleRef: "Módulo 1 - 1. Seguridad Pública",
+        q: "¿Qué institución es responsable de la 'Custodia de internos y recintos penitenciarios'?",
+        options: [
+          "Carabineros de Chile",
+          "Policía de Investigaciones (PDI)",
+          "Gendarmería de Chile",
+          "Dirección de Inspección Municipal"
+        ],
+        correct: 2,
+        explanation: "Según el apartado 1, Gendarmería de Chile tiene la responsabilidad de la custodia de internos y recintos penitenciarios."
+      },
+      {
+        id: 3,
+        moduleRef: "Módulo 1 - 2. Inspectores Municipales",
+        q: "Según la tabla de Facultades y Limitaciones de los Inspectores Municipales, ¿cuál de las siguientes acciones NO PUEDEN HACER?",
+        options: [
+          "Cursar infracciones y multas administrativas.",
+          "Fiscalizar locales comerciales con permiso municipal.",
+          "Solicitar documentos de identidad.",
+          "Ingresar a domicilios sin autorización judicial."
+        ],
+        correct: 3,
+        explanation: "Los inspectores municipales NO pueden ingresar a domicilios sin autorización judicial, ni usar fuerza física sin respaldo policial, ni actuar fuera de los límites comunales."
+      },
+      {
+        id: 4,
+        moduleRef: "Módulo 2 - 3. Seguridad Privada",
+        q: "¿Qué normativa legal regula el uso de sistemas de alarma y guardias de seguridad en Chile?",
+        options: [
+          "Decreto Ley N° 3.607",
+          "Ley N° 20.066",
+          "Ordenanza N° 110",
+          "Artículo 130 del Código Procesal Penal"
+        ],
+        correct: 0,
+        explanation: "El Decreto Ley N° 3.607 regula el uso de sistemas de alarma y guardias de seguridad, mientras que el DS N° 93/1985 reglamenta a los vigilantes privados."
+      },
+      {
+        id: 5,
+        moduleRef: "Módulo 2 - 3. Seguridad Privada",
+        q: "Verdadero o Falso: El vigilante privado tiene autorización para portar armas y el guardia de seguridad NO, debiendo ambos estar registrados en Carabineros (OS-10).",
+        options: [
+          "Verdadero",
+          "Falso"
+        ],
+        correct: 0,
+        explanation: "Es Verdadero. Esa es la diferencia clave destacada literalmente en el apartado 3 del manual."
+      },
+      {
+        id: 6,
+        moduleRef: "Módulo 3 - 4. ¿Qué es un Delito?",
+        q: "Dentro de los Elementos del Delito, ¿cómo se denomina el elemento que significa 'Descrita expresamente en la ley' (ej. el Código Penal define el robo)?",
+        options: [
+          "Acción / Omisión",
+          "Típica",
+          "Culpable",
+          "Administrativa"
+        ],
+        correct: 1,
+        explanation: "La conducta 'Típica' es aquella descrita expresamente en la ley penal."
+      },
+      {
+        id: 7,
+        moduleRef: "Módulo 3 - 4. ¿Qué es un Delito?",
+        q: "¿Cómo se clasifican los delitos que tienen asignada una pena de 'Más de 5 años y 1 día' (como homicidio, violación o secuestro)?",
+        options: [
+          "Falta",
+          "Simple Delito",
+          "Crimen",
+          "Infracción Municipal"
+        ],
+        correct: 2,
+        explanation: "Según la tabla de Clasificación de los Delitos, los que superan los 5 años y 1 día corresponden a la categoría de Crimen."
+      },
+      {
+        id: 8,
+        moduleRef: "Módulo 4 - 5. Robo y Hurto",
+        q: "¿Cuál es la diferencia práctica fundamental entre el Robo y el Hurto?",
+        options: [
+          "El robo solo ocurre de noche y el hurto solo ocurre de día.",
+          "En el robo se utiliza violencia, intimidación o fuerza en las cosas; en el hurto hay apropiación de cosa ajena sin violencia ni intimidación ni fuerza en las cosas.",
+          "El hurto tiene una pena mínima de 5 años y 1 día y el robo hasta 60 días.",
+          "No existe diferencia en el Código Penal chileno."
+        ],
+        correct: 1,
+        explanation: "La regla práctica del apartado 5 señala que si hay violencia, intimidación o fuerza en las cosas es ROBO; si solo es apropiación sigilosa sin ellas es HURTO."
+      },
+      {
+        id: 9,
+        moduleRef: "Módulo 4 - 5. Robo y Hurto",
+        q: "¿Qué pena recibe el hurto cuando el valor de lo sustraído se encuentra en el tramo de '4 UTM a 40 UTM'?",
+        options: [
+          "Prisión en grado mínimo a medio (1 a 60 días).",
+          "Presidio menor en grado mínimo (61 días a 1 año).",
+          "Presidio menor en grado medio (541 días a 3 años).",
+          "Presidio mayor en grado máximo (15 a 20 años)."
+        ],
+        correct: 2,
+        explanation: "Según la tabla 'Hurto: Tramos de Pena según Valor', de 4 UTM a 40 UTM corresponde Presidio menor en grado medio (541 días a 3 años)."
+      },
+      {
+        id: 10,
+        moduleRef: "Módulo 5 - 6. Conducción y Alcohol en Chile",
+        q: "¿Cuál es el rango de gramos de alcohol por litro de sangre que define el estado 'Bajo la influencia del alcohol' y cuál son las consecuencias graves de la Ley Emilia?",
+        options: [
+          "Bajo la influencia: 0,3 a 0,79 g/l | Ley Emilia: mínimo 1 año de cárcel efectiva, penas de 3 años y 1 día a 10 años, inhabilidad perpetua y comiso del vehículo.",
+          "Bajo la influencia: 0,8 a 2,0 g/l | Ley Emilia: solo amonestación escrita.",
+          "Bajo la influencia: 0,01 a 0,1 g/l | Ley Emilia: suspensión de licencia por 30 días.",
+          "Bajo la influencia: desde 1,5 g/l | Ley Emilia: multa de 1 UTM."
+        ],
+        correct: 0,
+        explanation: "El apartado 6 indica que 'Bajo la influencia del alcohol' va entre 0,3 y 0,79 g/l (ebriedad desde 0,8 g/l) y detalla para la Ley Emilia mínimo 1 año de cárcel efectiva, penas de 3 años y 1 día a 10 años, inhabilidad perpetua y comiso."
+      },
+      {
+        id: 11,
+        moduleRef: "Módulo 5 - 7. Legítima Defensa",
+        q: "Según el Art. 10 N° 4, 5 y 6 del Código Penal, ¿cuál de los siguientes NO es un requisito de la Legítima Defensa?",
+        options: [
+          "Agresión ilegítima (ataque real, actual o inminente, sin derecho del agresor).",
+          "Necesidad racional del medio empleado (defensa proporcional).",
+          "Falta de provocación suficiente por parte de quien se defiende.",
+          "Haber provocado intencionalmente al agresor para iniciar una riña."
+        ],
+        correct: 3,
+        explanation: "El tercer requisito exige justamente la 'Falta de provocación suficiente' por parte de quien se defiende."
+      },
+      {
+        id: 12,
+        moduleRef: "Módulo 6 - 8. Violencia Intrafamiliar (VIF)",
+        q: "¿Cuál es el número telefónico gratuito y confidencial de Carabineros disponible las 24 horas para casos de Violencia Intrafamiliar (Ley N° 20.066)?",
+        options: [
+          "Fono Familia 149",
+          "Fono 100",
+          "Clave 39",
+          "Fono 911"
+        ],
+        correct: 0,
+        explanation: "El apartado 8 destaca expresamente: 'FONO FAMILIA 149: Línea gratuita y confidencial de Carabineros disponible las 24 horas.'"
+      },
+      {
+        id: 13,
+        moduleRef: "Módulo 6 - 9. Flagrancia",
+        q: "Según el Art. 130 del Código Procesal Penal, cuando una persona 'Es encontrada poco después con objetos o huellas del delito', ¿ante qué situación de flagrancia estamos?",
+        options: [
+          "Flagrancia actual",
+          "Flagrancia por persecución",
+          "Flagrancia por encontrar",
+          "Flagrancia extendida"
+        ],
+        correct: 2,
+        explanation: "La tabla de Casos de Flagrancia (Art. 130 CPP) denomina 'Flagrancia por encontrar' a ser hallado poco después con objetos o huellas del delito."
+      },
+      {
+        id: 14,
+        moduleRef: "Módulo 7 - 10. Ley N° 21.802 (Párrafo 1°)",
+        q: "Según el Art. 12 de la Ley N° 21.802, ¿cuál de los siguientes es un requisito legal obligatorio para ser nombrado inspector de seguridad municipal?",
+        options: [
+          "Haber cursado enseñanza media completa y acreditar idoneidad física y psicológica anual por informe del Servicio de Salud.",
+          "Tener antecedentes penales por crimen o simple delito.",
+          "Ser dueño de una empresa de seguridad privada en la misma comuna.",
+          "Haber sido expulsado de las FF.AA. por sanción disciplinaria el año anterior."
+        ],
+        correct: 0,
+        explanation: "El Art. 12 exige en sus letras a) y b) enseñanza media completa e idoneidad física y psicológica acreditada anualmente por el Servicio de Salud, además de no tener condenas por crimen, simple delito o VIF."
+      },
+      {
+        id: 15,
+        moduleRef: "Módulo 7 - 10. Ley N° 21.802 (Párrafo 1° - Art. 16)",
+        q: "Respecto a los exámenes de drogas regulados en el Art. 16 de la Ley N° 21.802, ¿qué ocurre ante un resultado positivo sin justificación médica y quién más debe someterse al examen al menos una vez al año?",
+        options: [
+          "Produce el cese de funciones; además, el alcalde también debe someterse a este examen al menos una vez al año.",
+          "Solo se aplica una multa de 1 UTM y el alcalde está exento.",
+          "No existe control periódico de drogas en la Ley N° 21.802.",
+          "Se traslada al funcionario a otra comuna vecina."
+        ],
+        correct: 0,
+        explanation: "El Art. 16 establece que un resultado positivo sin justificación médica implica el cese de funciones, y que el alcalde también debe someterse a este examen al menos una vez al año."
+      },
+      {
+        id: 16,
+        moduleRef: "Módulo 8 - 10. Ley N° 21.802 (Párrafo 2° - Art. 18 y 22)",
+        q: "Según los artículos 18 y 22 de la Ley N° 21.802, ¿qué prohibición rige sobre los actos policiales y qué obligación existe sobre la información obtenida?",
+        options: [
+          "Está estrictamente prohibido ejercer atribuciones propias de las Fuerzas de Orden y Seguridad Pública, y deben mantener reserva o secreto incluso después de cesar en el cargo.",
+          "Pueden realizar allanamientos autónomos y publicar los datos en redes sociales.",
+          "El deber de reserva dura solo 15 días.",
+          "Pueden asumir el mando de las comisarías locales."
+        ],
+        correct: 0,
+        explanation: "El Art. 18 prohíbe estrictamente ejercer atribuciones policiales (bajo responsabilidad administrativa y penal) y el Art. 22 impone el deber de reserva incluso tras cesar en el cargo (sancionado por el Art. 246 CP)."
+      },
+      {
+        id: 17,
+        moduleRef: "Módulo 8 - 10. Ley N° 21.802 (Párrafo 2° - Art. 24)",
+        q: "Según el Art. 24 de la Ley N° 21.802, ¿con qué periodicidad deben las municipalidades enviar la nómina actualizada de inspectores a Carabineros y a la Subsecretaría de Prevención del Delito, y en qué plazo máximo deben informar una desvinculación por falta a la probidad?",
+        options: [
+          "Envío trimestral de la nómina; aviso en un máximo de 5 días por desvinculación por falta a la probidad.",
+          "Envío cada 10 años; aviso en 180 días.",
+          "Envío diario; sin registro de desvinculaciones.",
+          "Envío semestral al Registro Civil únicamente."
+        ],
+        correct: 0,
+        explanation: "El Art. 24 ordena enviar trimestralmente la nómina actualizada e informar en un máximo de 5 días las desvinculaciones por falta a la probidad."
+      },
+      {
+        id: 18,
+        moduleRef: "Módulo 9 - 10. Ley N° 21.802 (Párrafo 5° - Art. 40)",
+        q: "En las funciones coadyuvantes del Párrafo 5° (Art. 40: Control de medidas cautelares VIF), ¿qué pueden hacer los inspectores si constatan el quebrantamiento de una medida cautelar en casos de VIF?",
+        options: [
+          "Pueden detener si se constata quebrantamiento.",
+          "No pueden intervenir ni informar a nadie.",
+          "Deben esperar 30 días para enviar un oficio.",
+          "Pueden dictar sentencia judicial en el mismo domicilio."
+        ],
+        correct: 0,
+        explanation: "El Art. 40 establece que pueden verificar el cumplimiento de medidas cautelares en casos de VIF mediante patrullaje o visitas domiciliarias y 'Pueden detener si se constata quebrantamiento'."
+      },
+      {
+        id: 19,
+        moduleRef: "Módulo 9 - 10. Ley N° 21.802 (Párrafo 6° - Art. 43 y 47)",
+        q: "Según el Art. 47 de la Ley N° 21.802, ¿qué sanción recibe el inspector que oculte o altere los registros de las cámaras corporales (bodycam)?",
+        options: [
+          "Suspensión del empleo y multa de 15 a 20 UTM, además de las penas penales que correspondan.",
+          "Solo una advertencia verbal del jefe de turno.",
+          "Multa de 0,5 UTM sin suspensión.",
+          "Cambio de turno al horario nocturno."
+        ],
+        correct: 0,
+        explanation: "El Art. 47 dispone que el inspector que oculte o altere los registros será sancionado con suspensión del empleo y multa de 15 a 20 UTM, además de las penas penales que correspondan."
+      },
+      {
+        id: 20,
+        moduleRef: "Módulo 10 - 11. Tabla de Claves Radiales",
+        q: "Según la Tabla de Claves Radiales, ¿a qué situaciones corresponden la CLAVE 14, la CLAVE 39 y la CLAVE 67?",
+        options: [
+          "Clave 14: Funcionario atacado | Clave 39: Hurto | Clave 67: Robo... efectuándose.",
+          "Clave 14: Alimentación | Clave 39: Huelga | Clave 67: Ruidos molestos.",
+          "Clave 14: Abigeato | Clave 39: Daños | Clave 67: Vehículo abandonado.",
+          "Clave 14: Entrevista | Clave 39: Protesta | Clave 67: Sin novedad."
+        ],
+        correct: 0,
+        explanation: "En la codificación oficial: Clave 14 es FUNCIONARIO ATACADO, Clave 39 es HURTO y Clave 67 es ROBO... EFECTUANDOSE."
+      },
+      {
+        id: 21,
+        moduleRef: "Módulo 11 - Ordenanzas Municipales de Santiago",
+        q: "En la comuna de Santiago, ¿qué regulan respectivamente la Ordenanza N° 94, la Ordenanza N° 77 y la Ordenanza N° 130?",
+        options: [
+          "Ordenanza N° 94: Derechos por Permisos y Servicios Municipales | Ordenanza N° 77: Aseo y Limpieza Urbana | Ordenanza N° 130: Control de Cableado Aéreo y Subterráneo.",
+          "Ordenanza N° 94: Plaza de Armas | Ordenanza N° 77: Comercio Ambulante | Ordenanza N° 130: Artesanías.",
+          "Ordenanza N° 94: Alcoholes | Ordenanza N° 77: Ruidos | Ordenanza N° 130: Mascotas.",
+          "Ninguna pertenece a la Municipalidad de Santiago."
+        ],
+        correct: 0,
+        explanation: "Según la Guía Resumen de Santiago: la Ordenanza N° 94 regula Derechos por Permisos y Servicios; la N° 77 regula Aseo y Limpieza Urbana; y la N° 130 regula el Control de Cableado Aéreo y Subterráneo."
+      },
+      {
+        id: 22,
+        moduleRef: "Módulo 11 - Ordenanzas Municipales de Santiago (Ordenanza N° 110)",
+        q: "¿Qué restricciones directas impone la Ordenanza N° 110 sobre Administración y Uso de la Plaza de Armas de Santiago?",
+        options: [
+          "Prohibición absoluta del consumo de alcohol y drogas en todo el perímetro, regulación estricta de mobiliario itinerante y restricción severa de letreros comerciales y altavoces/parlantes.",
+          "Autorización libre de comercio sin permiso y uso irrestricto de parlantes las 24 horas.",
+          "Cierre definitivo del tránsito peatonal en todo el casco histórico.",
+          "Exención total de fiscalización por parte de los inspectores municipales."
+        ],
+        correct: 0,
+        explanation: "La Ordenanza N° 110 protege la Plaza de Armas imponiendo prohibición absoluta de consumo de alcohol y drogas, regulación estricta de mobiliario itinerante y control de contaminación acústica y publicidad."
+      }
+    ];
+
+    let appState = {
+      currentPage: 0,
+      completedModules: {},
+      examAnswers: {},
+      lastResult: null
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          appState = Object.assign(appState, parsed);
+        }
+      } catch (e) {
+        console.warn("Almacenamiento local no disponible:", e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        console.warn("No se pudo guardar en localStorage:", e);
+      }
+    }
+
+    function renderNavigation() {
+      const navList = document.getElementById('sidebarNavList');
+      navList.innerHTML = '';
+
+      pagesMeta.forEach(p => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.className = 'nav-item' + (appState.currentPage === p.id ? ' active' : '');
+        btn.onclick = () => goToPage(p.id);
+
+        let badgeHtml = '';
+        if (p.type === 'module') {
+          const isDone = !!appState.completedModules[p.modNum];
+          badgeHtml = `<span class="status-dot ${isDone ? 'done' : ''}" title="${isDone ? 'Módulo completado' : 'Pendiente de actividad'}">${isDone ? '✔' : p.modNum}</span>`;
+        } else if (p.type === 'exam') {
+          badgeHtml = `<span class="status-dot">✍️</span>`;
+        } else if (p.type === 'results') {
+          badgeHtml = `<span class="status-dot">📊</span>`;
+        } else {
+          badgeHtml = `<span class="status-dot">•</span>`;
+        }
+
+        btn.innerHTML = `<span>${p.title}</span> ${badgeHtml}`;
+        li.appendChild(btn);
+        navList.appendChild(li);
+      });
+
+      renderIndexCards();
+      updateProgressBar();
+    }
+
+    function renderIndexCards() {
+      const container = document.getElementById('indexCardsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      pagesMeta.filter(p => p.id >= 2).forEach(p => {
+        const isDone = p.type === 'module' && !!appState.completedModules[p.modNum];
+        const card = document.createElement('div');
+        card.className = 'index-card';
+        card.innerHTML = `
+          <div>
+            <span class="module-tag">${p.type === 'module' ? (isDone ? '✔ Completado' : '⏳ Pendiente') : 'Sección Especial'}</span>
+            <h4>${p.title}</h4>
+          </div>
+          <button class="btn ${isDone ? 'btn-secondary' : ''}" onclick="goToPage(${p.id})">Ir a sección ➡</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function updateProgressBar() {
+      const totalModules = 11;
+      const doneCount = Object.keys(appState.completedModules).filter(k => appState.completedModules[k]).length;
+      const pct = Math.round((doneCount / totalModules) * 100);
+
+      document.getElementById('globalProgressFill').style.width = pct + '%';
+      document.getElementById('progressPercentText').textContent = `${pct}% Completado (${doneCount}/${totalModules} módulos)`;
+      document.getElementById('pageIndicatorText').textContent = `Página ${appState.currentPage + 1} de ${pagesMeta.length}`;
+      document.getElementById('footerPageStatus').textContent = `${pagesMeta[appState.currentPage].title} (${appState.currentPage + 1}/${pagesMeta.length})`;
+
+      document.getElementById('prevPageBtn').disabled = appState.currentPage === 0;
+      document.getElementById('nextPageBtn').disabled = appState.currentPage === pagesMeta.length - 1;
+    }
+
+    function goToPage(pageIndex) {
+      if (pageIndex < 0 || pageIndex >= pagesMeta.length) return;
+      appState.currentPage = pageIndex;
+      saveState();
+
+      document.querySelectorAll('.page-section').forEach((sec, idx) => {
+        sec.classList.toggle('active', idx === pageIndex);
+      });
+
+      renderNavigation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changePage(delta) {
+      goToPage(appState.currentPage + delta);
+    }
+
+    function verifyModuleQuiz(modNum, expectedAnswers) {
+      const feedbackEl = document.getElementById('feedback-m' + modNum);
+      let allAnswered = true;
+      let allCorrect = true;
+
+      for (const qName in expectedAnswers) {
+        const selected = document.querySelector(`input[name="${qName}"]:checked`);
+        if (!selected) {
+          allAnswered = false;
+          break;
+        }
+        if (selected.value !== expectedAnswers[qName]) {
+          allCorrect = false;
+        }
+      }
+
+      if (!allAnswered) {
+        feedbackEl.className = 'feedback-msg err';
+        feedbackEl.textContent = '⚠️ Por favor responde todas las preguntas de comprobación antes de verificar.';
+        return;
+      }
+
+      if (allCorrect) {
+        appState.completedModules[modNum] = true;
+        saveState();
+        renderNavigation();
+        feedbackEl.className = 'feedback-msg ok';
+        feedbackEl.textContent = `✅ ¡Excelente trabajo! Has respondido correctamente y el Módulo ${modNum} ha quedado registrado como completado.`;
+      } else {
+        feedbackEl.className = 'feedback-msg err';
+        feedbackEl.textContent = '❌ Alguna de las respuestas no es correcta. Revisa los cuadros de contenido original de este módulo e inténtalo nuevamente.';
+      }
+    }
+
+    function filterRadialTable() {
+      const query = document.getElementById('radialSearchInput').value.toLowerCase().trim();
+      const table = document.getElementById('radialCodesTable');
+      const rows = table.querySelectorAll('tbody tr');
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    function renderFinalExam() {
+      const container = document.getElementById('finalExamContainer');
+      container.innerHTML = '';
+
+      finalQuestions.forEach((item, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'original-box';
+        qCard.id = `exam-qcard-${item.id}`;
+
+        let optionsHtml = '';
+        item.options.forEach((optText, optIdx) => {
+          const checked = appState.examAnswers[item.id] === optIdx ? 'checked' : '';
+          optionsHtml += `
+            <label class="quiz-option-label">
+              <input type="radio" name="final_q_${item.id}" value="${optIdx}" ${checked} onchange="selectExamAnswer(${item.id}, ${optIdx})">
+              <span>${optText}</span>
+            </label>
+          `;
+        });
+
+        qCard.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap;">
+            <span class="module-tag">Pregunta ${index + 1} de ${finalQuestions.length}</span>
+            <span style="font-size:0.8rem; color:var(--accent-gold);">${item.moduleRef}</span>
+          </div>
+          <p style="font-weight:700; font-size:1.05rem;">${item.q}</p>
+          <div class="quiz-options">${optionsHtml}</div>
+        `;
+        container.appendChild(qCard);
+      });
+    }
+
+    function selectExamAnswer(qId, optIdx) {
+      appState.examAnswers[qId] = optIdx;
+      saveState();
+    }
+
+    /**
+     * Fórmula de calificación chilena (escala 1.0 a 7.0) con exigencia configurable (e):
+     * - Si porcentaje p < exigencia e: Nota = 1.0 + 3.0 * (p / e)
+     * - Si porcentaje p >= exigencia e: Nota = 4.0 + 3.0 * ((p - e) / (100 - e))
+     */
+    function calculateChileanGrade(percentage, threshold) {
+      let grade = 1.0;
+      if (percentage < threshold) {
+        grade = 1.0 + 3.0 * (percentage / threshold);
+      } else {
+        grade = 4.0 + 3.0 * ((percentage - threshold) / (100 - threshold));
+      }
+      grade = Math.max(1.0, Math.min(7.0, grade));
+      return grade.toFixed(1).replace('.', ',');
+    }
+
+    function gradeFinalExam() {
+      const warningBox = document.getElementById('examWarningBox');
+      const missing = [];
+
+      finalQuestions.forEach((item, idx) => {
+        if (appState.examAnswers[item.id] === undefined) {
+          missing.push(idx + 1);
+        }
+      });
+
+      if (missing.length > 0) {
+        warningBox.style.display = 'block';
+        warningBox.innerHTML = `⚠️ <strong>Faltan preguntas por responder:</strong> Debes contestar todas las preguntas antes de corregir. Preguntas pendientes: <strong>${missing.join(', ')}</strong>.`;
+        return;
+      }
+
+      warningBox.style.display = 'none';
+
+      let correctCount = 0;
+      finalQuestions.forEach(item => {
+        if (appState.examAnswers[item.id] === item.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = finalQuestions.length;
+      const incorrectCount = total - correctCount;
+      const pct = Math.round((correctCount / total) * 100);
+      const thresholdInput = parseFloat(document.getElementById('passingThresholdInput').value) || 60;
+      const threshold = Math.min(80, Math.max(50, thresholdInput));
+      const gradeStr = calculateChileanGrade((correctCount / total) * 100, threshold);
+      const approved = ((correctCount / total) * 100) >= threshold;
+
+      appState.lastResult = {
+        total,
+        correctCount,
+        incorrectCount,
+        pct,
+        threshold,
+        gradeStr,
+        approved,
+        answersSnapshot: Object.assign({}, appState.examAnswers)
+      };
+
+      saveState();
+      renderResultsPage('all');
+      goToPage(15);
+    }
+
+    function renderResultsPage(filterMode = 'all') {
+      const res = appState.lastResult;
+      const summaryPanel = document.getElementById('resultsSummaryPanel');
+      const listContainer = document.getElementById('detailedCorrectionsList');
+      const actionBtns = document.getElementById('resultsActionButtons');
+
+      if (!res) {
+        actionBtns.style.display = 'none';
+        return;
+      }
+
+      actionBtns.style.display = 'flex';
+
+      summaryPanel.innerHTML = `
+        <div class="score-banner">
+          <span class="module-tag">Resultado Oficial de Autoevaluación Local</span>
+          <div class="grade-badge ${res.approved ? 'grade-pass' : 'grade-fail'}">Nota: ${res.gradeStr}</div>
+          <h3 style="color: ${res.approved ? '#6ee7b7' : '#fca5a5'}; margin-bottom: 12px;">
+            Estado Final: ${res.approved ? '✅ APROBADO' : '❌ NO APROBADO'} (Exigencia aplicada: ${res.threshold}%)
+          </h3>
+          <div style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-top:14px; font-size:0.98rem;">
+            <div><strong>Total preguntas:</strong> ${res.total}</div>
+            <div><strong>Correctas:</strong> <span style="color:#6ee7b7">${res.correctCount}</span></div>
+            <div><strong>Incorrectas:</strong> <span style="color:#fca5a5">${res.incorrectCount}</span></div>
+            <div><strong>Porcentaje de logro:</strong> ${res.pct}%</div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-top:12px;">
+            Fórmula escala chilena (1,0 a 7,0): Con ${res.threshold}% de exigencia, el ${res.threshold}% de aciertos equivale a nota 4,0.
+          </p>
+        </div>
+      `;
+
+      listContainer.innerHTML = '';
+
+      finalQuestions.forEach((item, idx) => {
+        const userAnsIdx = res.answersSnapshot[item.id];
+        const isCorrect = userAnsIdx === item.correct;
+
+        if (filterMode === 'errors' && isCorrect) return;
+
+        const card = document.createElement('div');
+        card.className = `correction-card ${isCorrect ? 'correct' : 'incorrect'}`;
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+            <strong>Pregunta ${idx + 1}: ${isCorrect ? '✅ Correcta' : '❌ Incorrecta'}</strong>
+            <span style="font-size:0.82rem; color:var(--accent-gold);">Referencia: ${item.moduleRef}</span>
+          </div>
+          <p style="margin-bottom:10px;"><strong>Enunciado:</strong> ${item.q}</p>
+          <p style="color:${isCorrect ? '#6ee7b7' : '#fca5a5'};"><strong>Tu respuesta:</strong> ${item.options[userAnsIdx] ?? 'Sin responder'}</p>
+          <p style="color:#6ee7b7;"><strong>Respuesta correcta:</strong> ${item.options[item.correct]}</p>
+          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border-color); font-size:0.9rem; color:var(--text-muted);">
+            <strong>Explicación pedagógica:</strong> ${item.explanation}
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+
+      if (filterMode === 'errors' && res.incorrectCount === 0) {
+        listContainer.innerHTML = `<div class="original-box" style="text-align:center;">🎉 ¡Felicitaciones! No tuviste ningún error en la evaluación.</div>`;
+      }
+    }
+
+    function filterCorrections(mode) {
+      renderResultsPage(mode);
+    }
+
+    function retakeFinalExam() {
+      appState.examAnswers = {};
+      appState.lastResult = null;
+      saveState();
+      renderFinalExam();
+      document.getElementById('detailedCorrectionsList').innerHTML = '';
+      document.getElementById('resultsSummaryPanel').innerHTML = '<p>Prueba reiniciada. Completa tus respuestas en la pestaña Prueba Final.</p>';
+      goToPage(14);
+    }
+
+    function resetCourseProgress() {
+      const confirmReset = confirm("¿Estás seguro/a de que deseas reiniciar todo el progreso del curso y borrar las respuestas guardadas?");
+      if (!confirmReset) return;
+
+      appState = {
+        currentPage: 0,
+        completedModules: {},
+        examAnswers: {},
+        lastResult: null
+      };
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+      document.querySelectorAll('.feedback-msg').forEach(el => {
+        el.className = 'feedback-msg';
+        el.textContent = '';
+      });
+
+      renderFinalExam();
+      goToPage(0);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderFinalExam();
+      if (appState.lastResult) {
+        renderResultsPage('all');
+      }
+      goToPage(appState.currentPage || 0);
+    });
+  </script>
+</body>
+</html>
